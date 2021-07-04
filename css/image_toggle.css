@@ -1,0 +1,17 @@
+.dark-mode-image {
+    display: var(--md-image-dark);
+}
+
+.light-mode-image {
+    display: var(--md-image-light);
+}
+
+[data-md-color-scheme="default"] {
+    --md-image-dark: none;
+    --md-image-light: block;
+}
+
+[data-md-color-scheme="slate"] {
+    --md-image-dark: block;
+    --md-image-light: none;
+}

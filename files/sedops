@@ -1,0 +1,189 @@
+#!/bin/bash
+
+# remove the newline left by pandoc after {% hint style ...}
+# sed -i '/{% hint.*/{n;d}' "$1"
+
+# move {% endhint %} to a new line
+# sed -i 's/{% endhint.*/\n&/' "$1"
+
+# prefix 4 spaces to the lines between hint patterns
+hintspaces() {
+  sed '                                                                                          
+        /{% hint.*/,/{% endhint*/ {                                               
+            /{% hint.*/n                                                          
+            /{% endhint.*/ ! {                                                                 
+                s/^/    /g                                                                     
+            }                                                                                  
+        }                                                                                     
+' -i "$@"
+}
+
+# remove the endhint tag
+delendhint() {
+  sed -i '/^{% endhint %}/ d' "$@"
+}
+
+# replace the {% hint style ...} tag with respective mkdocs admonition
+replacehints() {
+  sed -i 's/{% hint style="success".*/???+ success/' "$@"
+  sed -i 's/{% hint style="info".*/???+ info/' "$@"
+  sed -i 's/{% hint style="warning".*/???+ warning/' "$@"
+  sed -i 's/{% hint style="danger".*/???+ danger/' "$@"
+}
+
+# fix images by replacing '../.gitbook/assets' with '/images'
+# there can be '../../.gitbook/assets' as well so this will replace all such instances
+imgcnv() {
+  sed -i 's/](\(..\/\)\1*.gitbook\/assets/](\/images/g' "$@"
+}
+
+# add the relevant dark or light mode class to the image
+addimgclass() {
+  sed -i 's/\(dark.*.png)$\)/\1{.dark-mode-image}/g' "$@"
+  sed -i 's/\(light.*.png)$\)/\1{.light-mode-image}/g' "$@"
+}
+
+# the objective of the following functions is to change
+# {% page-ref page="start-here/zero-to-investing/getting-started.md" %}
+# to
+# [Getting Started](start-here/zero-to-investing/getting-started.md){ .md-button }
+# to accomplish this, we have to extract the relative link from the gitbook
+# pageref and use that to extract the title of the page
+# then, we have process each and every page-ref line in all .md files and
+# replace them with what we have
+
+# extract the link mentioned as-is from the page-ref pattern but append
+# README.md in case the page-link ends with a backslash
+# THIS IS WHAT WE ULTIMATELY WANT WHEN CREATING A MKDOCS PAGE-LINK
+# if we supply
+# {% page-ref page="start-here/zero-to-investing/getting-started.md" %}
+# {% page-ref page="../../faqs/mfs/"}
+# we should get
+# start-here/zero-to-investing/getting-started.md
+# ../../faqs/mfs/README.md
+get_link() {
+  local link
+  local rlink
+  link=$(printf '%s\n' "$1" | awk -F '\"' '{print $2}')
+  # rlink=${link/%\//\/README.md}
+  rlink=$(printf '%s\n' "$link" | sed -e 's/\/$/\/README.md/')
+  printf '%s\n' "${rlink}"
+}
+
+# this function extracts the link meant to be fed to `find`
+# it should use the get_link function and work on that
+# so, if it gets
+# start-here/zero-to-investing/getting-started.md
+# ../../faqs/mfs/README.md
+# it should output
+# start-here/zero-to-investing/getting-started.md
+# faqs/mfs/README.md
+get_tlink() {
+  local link
+  local dlink
+  link=$(get_link "$1")
+  # dlink=${link##*(../)}
+  dlink=$(printf '%s\n' "$link" | sed -e 's/^\(..\/\)\1*//')
+  printf '%s\n' "${dlink}"
+}
+
+# at last, this function should use the output from get_tlink function (which
+# in turn uses get_link) to find the complete path using `find` which will be
+# used to extract the title
+# so, if it gets
+# start-here/zero-to-investing/getting-started.md
+# faqs/mfs/README.md
+# it should output
+# ./docs/start-here/zero-to-investing/getting-started.md
+# ./docs/faqs/mfs/README.md
+get_actlink() {
+  local link
+  link=$(get_tlink "$1")
+  find ./ -path "*$link"
+}
+
+# extract the title from the relative link
+get_title() {
+  local title
+  local link
+  link=$(get_actlink "$1")
+  title=$(grep -h -m 1 '^#\ ' "$link" | sed -e 's/# //')
+  printf '%s\n' "${title}"
+}
+
+# fix the page-ref gitbook notation
+pageref() {
+  local link
+  local title
+  local len
+  mapfile -t LINUM < <(grep -n '^{% page-ref page=".*" %}$' "$@" | awk -F ':' '{print $1}')
+  mapfile -t LINES < <(grep '^{% page-ref page=".*" %}$' "$@")
+  len="${#LINUM[@]}"
+  ((len = len - 1))
+  i=0
+  while [[ $i -le $len ]]; do
+    link=$(get_link "${LINES[$i]}")
+    title=$(get_title "${LINES[$i]}")
+    sed -i "${LINUM[$i]}s_.*_[$title]($link){ .md-button }_" "$@"
+    ((i = i + 1))
+  done
+  unset LINUM
+  unset LINES
+}
+
+# tried to use the `maxresdefault.jpg` thumbnail instead of `hqdefault.jpg` but
+# it doesn't work for some videos
+# for example
+# https://i.ytimg.com/vi/-ujqL8h8cAI/maxresdefault.jpg
+ytfix() {
+  local dataid
+  # local thumb
+  local theme
+  local len
+  local i
+  mapfile -t VIDNUM < <(grep -n '^{% embed.*youtu.*%}$' "$@" | awk -F ':' '{print $1}')
+  mapfile -t VIDS < <(grep '^{% embed.*youtu.*%}$' "$@")
+  len="${#VIDNUM[@]}"
+  ((len = len - 1))
+  i=0
+  while [[ $i -le $len ]]; do
+    if [[ ${VIDS[$i]} =~ youtube.com ]]; then
+      dataid=$(echo "${VIDS[$i]}" | awk -F '[="&]' '{print $4}')
+    elif [[ ${VIDS[$i]} =~ youtu.be ]]; then
+      dataid=$(echo "${VIDS[$i]}" | awk -F '[/"&]' '{print $5}')
+    else
+      printf '%s\n' "No YT URL found"
+    fi
+
+    if [[ ${VIDS[$i],,} =~ dark ]]; then
+      theme='youtube-player-dark'
+    elif [[ ${VIDS[$i],,} =~ light ]]; then
+      theme='youtube-player-light'
+    else
+      theme='youtube-player-nocolor'
+    fi
+
+    #   thumb="https://i.ytimg.com/vi/$dataid/maxresdefault.jpg"
+    #   sed -i "${VIDNUM[$i]}s_.*_<lite-youtube videoid=\"$dataid\" style=\"background-image: url\('$thumb'\)\;\"></lite-youtube>_" "$@"
+    sed -i "${VIDNUM[$i]}s_.*_<lite-youtube class=\"$theme\" videoid=\"$dataid\"></lite-youtube>_" "$@"
+
+    ((i = i + 1))
+  done
+}
+
+command="$1"
+shift
+
+case "$command" in
+  spaces) hintspaces "$@" ;;
+  endhint) delendhint "$@" ;;
+  replace) replacehints "$@" ;;
+  img) imgcnv "$@" ;;
+  imgclass) addimgclass "$@" ;;
+  pref) pageref "$@" ;;
+  ytfix) ytfix "$@" ;;
+  *)
+    printf '%s\n' 'Usage: sedops spaces|endhint|replace|img|imgclass|pref|ytfix' >&2
+    exit 1
+    ;;
+esac

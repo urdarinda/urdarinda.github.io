@@ -1,0 +1,23 @@
+.youtube-player-dark {
+  display: var(--md-youtube-dark);
+}
+
+.youtube-player-light {
+  display: var(--md-youtube-light);
+}
+
+.youtube-player-nocolor {
+  display: var(--md-youtube-nocolor);
+}
+
+[data-md-color-scheme="default"] {
+  --md-youtube-dark: none;
+  --md-youtube-light: block;
+  --md-youtube-nocolor: block;
+}
+
+[data-md-color-scheme="slate"] {
+  --md-youtube-dark: block;
+  --md-youtube-light: none;
+  --md-youtube-nocolor: block;
+}

@@ -1,0 +1,3479 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Mathematical formulation of XIRR, discounted cashflows, NPV, and decay.">
+      
+      
+      
+      
+        <link rel="canonical" href="https://staging.indiainvestments.wiki/excel/quantifying-returns-cagr-and-xirr/xirr-math/">
+      
+      <link rel="icon" href="../../../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.9">
+    
+    
+      
+        <title>A Rigorous Introduction to XIRR - India Investments Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ca7ac06f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.f1a3b89f.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,400i,700%7CFira+Code&display=fallback">
+        <style>:root{--md-text-font-family:"Inter";--md-code-font-family:"Fira Code"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../../css/image_toggle.css">
+    
+      <link rel="stylesheet" href="../../../css/youtube_toggle.css">
+    
+      <link rel="stylesheet" href="../../../css/lite-yt-embed.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#a-rigorous-introduction-to-xirr" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="India Investments Wiki" class="md-header__button md-logo" aria-label="India Investments Wiki" data-md-component="logo">
+      
+  <img src="../../../images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            India Investments Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              A Rigorous Introduction to XIRR
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dark Mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Dark Mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Light Mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Light Mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/indiainvestments/mkdocswiki/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    India Investments Wiki
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="India Investments Wiki" class="md-nav__button md-logo" aria-label="India Investments Wiki" data-md-component="logo">
+      
+  <img src="../../../images/logo.png" alt="logo">
+
+    </a>
+    India Investments Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/indiainvestments/mkdocswiki/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    India Investments Wiki
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../disclaimers-and-disclosures/" class="md-nav__link">
+        Disclaimers and Disclosures
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Bonds
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Bonds" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Bonds
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bonds/" class="md-nav__link">
+        Bond Basics
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bonds/corporate-bonds/" class="md-nav__link">
+        Corporate Bonds
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bonds/section-2-government-securities/" class="md-nav__link">
+        Government Securities
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Contributors
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Contributors" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Contributors
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/" class="md-nav__link">
+        How Can I Start Contributing?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/how-to-link-faq-via-bot-in-discord/" class="md-nav__link">
+        How to link FAQ via bot in Discord
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      <label class="md-nav__link" for="__nav_4_3">
+        Style guides
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Style guides" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          Style guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/style-guides/" class="md-nav__link">
+        Style Guides
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/style-guides/excel-series-style-guide/" class="md-nav__link">
+        Excel Series Style Guide
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/style-guides/faq-style-guide-1/" class="md-nav__link">
+        FAQ Style Guide
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/style-guides/general-style-guide/" class="md-nav__link">
+        General Style Guide
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/style-guides/how-to-style-guide/" class="md-nav__link">
+        How To Style Guide
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/style-guides/stocks-style-guide/" class="md-nav__link">
+        Stocks Style Guide
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      <label class="md-nav__link" for="__nav_4_4">
+        What is a contributor license agreement and why are we using it
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="What is a contributor license agreement and why are we using it" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          What is a contributor license agreement and why are we using it
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/what-is-a-contributor-license-agreement-and-why-are-we-using-it/" class="md-nav__link">
+        What is a Contributor License Agreement and why are we using it?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/what-is-a-contributor-license-agreement-and-why-are-we-using-it/contributor-license-agreement/" class="md-nav__link">
+        Contributor License Agreement
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Discord and reddit
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Discord and reddit" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Discord and reddit
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../discord-and-reddit/im-unable-to-send-messages-to-stocks-fundamentals-channel-on-discord-why/" class="md-nav__link">
+        I'm unable to send messages to stocks-fundamentals channel on Discord. Why?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../discord-and-reddit/search-wiki-discord/" class="md-nav__link">
+        How to Search the Wiki From Discord
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" checked>
+      
+      <label class="md-nav__link" for="__nav_6">
+        Excel
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Excel" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Excel
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        Excel for Fun and Profit
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reactivity/" class="md-nav__link">
+        Reactive UI & Updates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-external-data-google-finance/" class="md-nav__link">
+        Using External Data : Google Finance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_4" type="checkbox" id="__nav_6_4" checked>
+      
+      <label class="md-nav__link" for="__nav_6_4">
+        Quantifying returns cagr and xirr
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Quantifying returns cagr and xirr" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_4">
+          <span class="md-nav__icon md-icon"></span>
+          Quantifying returns cagr and xirr
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Quantifying Returns: CAGR and XIRR
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cagr/" class="md-nav__link">
+        CAGR: Point-to-Point Annualized Returns
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          A Rigorous Introduction to XIRR
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        A Rigorous Introduction to XIRR
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#intro" class="md-nav__link">
+    Intro 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discounting-and-xirr" class="md-nav__link">
+    Discounting and XIRR 
+  </a>
+  
+    <nav class="md-nav" aria-label="Discounting and XIRR ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#discounted-cashflow-table" class="md-nav__link">
+    Discounted Cashflow Table
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#net-present-value" class="md-nav__link">
+    Net Present Value
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verifying-xirr-by-adding-up-discounted-cashflows" class="md-nav__link">
+    Verifying XIRR by Adding up Discounted Cashflows
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-solve-the-xirr-equation" class="md-nav__link">
+    How to Solve the XIRR Equation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-is-xirr-annualized-growth-rate" class="md-nav__link">
+    Why is XIRR annualized growth rate?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization" class="md-nav__link">
+    Visualization 
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualization ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#two-transactions-cagr-and-xirr" class="md-nav__link">
+    Two Transactions - CAGR and XIRR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more-than-two-transactions" class="md-nav__link">
+    More than Two Transactions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recap-and-wrapping-up" class="md-nav__link">
+    Recap and Wrapping Up
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../xirr/" class="md-nav__link">
+        A Gentle Introduction to XIRR
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_5" type="checkbox" id="__nav_6_5" >
+      
+      <label class="md-nav__link" for="__nav_6_5">
+        Using external data working with csv format
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Using external data working with csv format" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_5">
+          <span class="md-nav__icon md-icon"></span>
+          Using external data working with csv format
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-external-data-working-with-csv-format/" class="md-nav__link">
+        Using External Data : Working with CSV Format
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-external-data-working-with-csv-format/computing-ltcg-eligible-equity-units/" class="md-nav__link">
+        Computing LTCG Eligible Equity Units
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-external-data-working-with-csv-format/csv-format/" class="md-nav__link">
+        CSV Format
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-external-data-working-with-csv-format/process-for-estimating-tax/" class="md-nav__link">
+        Process for Estimating Tax
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      <label class="md-nav__link" for="__nav_7">
+        Faqs
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Faqs" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Faqs
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/" class="md-nav__link">
+        FAQs
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" type="checkbox" id="__nav_7_2" >
+      
+      <label class="md-nav__link" for="__nav_7_2">
+        Foreign invest
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Foreign invest" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          Foreign invest
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/foreign-invest/" class="md-nav__link">
+        Foreign Investing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/foreign-invest/how-should-i-invest-in-us-equity/" class="md-nav__link">
+        How should I invest in US equity?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/foreign-invest/why-should-i-invest-in-the-us-markets/" class="md-nav__link">
+        Why should I invest in the US markets?
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_3" type="checkbox" id="__nav_7_3" >
+      
+      <label class="md-nav__link" for="__nav_7_3">
+        Insurance
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Insurance" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_3">
+          <span class="md-nav__icon md-icon"></span>
+          Insurance
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/insurance/" class="md-nav__link">
+        Insurance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/insurance/do-i-need-my-own-health-insurance-employer-already-has-group-policy/" class="md-nav__link">
+        Do I need my own health insurance? Employer already has group policy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/insurance/extra-premium-term-cover/" class="md-nav__link">
+        Is it worth paying extra premium for term insurance?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/insurance/opinions-on-investing-in-smart-wealth-plan-by-bank/" class="md-nav__link">
+        Opinions on investing in smart wealth plan by bank?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/insurance/should-i-invest-in-this-lic-policy/" class="md-nav__link">
+        Should I invest in this LIC policy?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/insurance/top-up-vs-super-top-up/" class="md-nav__link">
+        Should I take top-up policy or super top-up?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/insurance/up-to-what-age-should-i-take-term-cover/" class="md-nav__link">
+        Up to what age should I take term cover?
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_4" type="checkbox" id="__nav_7_4" >
+      
+      <label class="md-nav__link" for="__nav_7_4">
+        Mfs
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Mfs" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_4">
+          <span class="md-nav__icon md-icon"></span>
+          Mfs
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/" class="md-nav__link">
+        Mutual Funds and ETFs
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/best-mutual-fund-app-for-investments/" class="md-nav__link">
+        What is the best mutual fund app for investments?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/direct-vs-regular/" class="md-nav__link">
+        Why should I invest in Direct Plans instead of Regular Plans?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/ive-to-invest-in-elss-for-80c-tax-saving.-which-fund-s-should-i-pick/" class="md-nav__link">
+        I’ve to invest in ELSS for 80C tax saving. Which fund(s) should I pick?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/lumpsum-investment-vs-sip-dca/" class="md-nav__link">
+        Lumpsum investment vs SIP/DCA
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/should-i-get-a-demat-account-to-buy-units-in-mutual-funds/" class="md-nav__link">
+        Should I get a Demat Account to buy units in Mutual Funds?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/whats-the-best-mutual-fund-i-can-invest-in/" class="md-nav__link">
+        What’s the best mutual fund I can invest in?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/which-date-s-is-are-best-for-sip-in-a-month/" class="md-nav__link">
+        Which date(s) is/are best for SIP in a month?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/why-are-index-funds-in-india-not-as-cheap-as-vanguards-index-funds-and-etfs/" class="md-nav__link">
+        Why are Index Funds in India not as cheap as Vanguard's Index Funds and ETFs?
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_5" type="checkbox" id="__nav_7_5" >
+      
+      <label class="md-nav__link" for="__nav_7_5">
+        Misc
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Misc" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_5">
+          <span class="md-nav__icon md-icon"></span>
+          Misc
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/misc/" class="md-nav__link">
+        Miscellaneous
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/misc/explain-like-i-am-5-eli5-chit-funds/" class="md-nav__link">
+        What are chit funds? Should I invest?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/misc/is-gold-a-good-investment-now-it-has-gone-up-50-this-year/" class="md-nav__link">
+        Is Gold a good investment now? It has gone up ~50% this year
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/misc/where-can-i-park-money-for-a-few-days-a-few-months-or-a-few-years/" class="md-nav__link">
+        Where can I park money for a few days, a few months, or a few years?
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_6" type="checkbox" id="__nav_7_6" >
+      
+      <label class="md-nav__link" for="__nav_7_6">
+        Stocks
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Stocks" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_6">
+          <span class="md-nav__icon md-icon"></span>
+          Stocks
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/stocks/" class="md-nav__link">
+        Stocks
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/stocks/is-smallcase-a-good-investment-returns-look-good/" class="md-nav__link">
+        Should I invest in smallcase?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/stocks/stock-market-crash-which-stocks-should-i-buy/" class="md-nav__link">
+        The Stock Market Has Crashed. Which Stocks Should I Buy?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/stocks/what-is-the-best-app-for-buying-or-trading-stocks/" class="md-nav__link">
+        What is the best app for buying or trading stocks?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/stocks/which-screener/" class="md-nav__link">
+        Which screener(s) should I use?
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_7" type="checkbox" id="__nav_7_7" >
+      
+      <label class="md-nav__link" for="__nav_7_7">
+        Tax
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tax" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_7">
+          <span class="md-nav__icon md-icon"></span>
+          Tax
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/tax/" class="md-nav__link">
+        Tax
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/tax/i-dont-have-any-tax-to-pay.-do-i-still-have-to-file-itr/" class="md-nav__link">
+        I don't have any tax to pay. Do I still have to file ITR?
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      <label class="md-nav__link" for="__nav_8">
+        How to
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="How to" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          How to
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-to/" class="md-nav__link">
+        How To
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-to/how-to-file-sebi-scores-complaint/" class="md-nav__link">
+        How to file SEBI SCORES complaint?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-to/how-to-move-from-one-mutual-fund-platform-to-another/" class="md-nav__link">
+        How to move from one mutual fund platform to another
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-to/how-to-pay-advance-tax/" class="md-nav__link">
+        How to Pay Advance Tax
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-to/how-to-switch-the-mutual-fund-from-regular-to-direct-plan/" class="md-nav__link">
+        How to switch a Mutual Fund from Regular to Direct Plan
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-to/how-to-transfer-shares-from-one-demat-account-to-another/" class="md-nav__link">
+        How to transfer shares from one demat account to another
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-to/rematerialize-demat-mf/" class="md-nav__link">
+        How to rematerialize mutual fund from demat form
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-to/update-nominee-details/" class="md-nav__link">
+        How to Update Nominee Details?
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      <label class="md-nav__link" for="__nav_9">
+        Misc
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Misc" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Misc
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../misc/miscellaneous/" class="md-nav__link">
+        Miscellaneous
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../misc/recommended-reading/" class="md-nav__link">
+        Recommended Reading
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../misc/us-investing/" class="md-nav__link">
+        US Investing
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      <label class="md-nav__link" for="__nav_10">
+        Start here
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Start here" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          Start here
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/behavioral-biases/" class="md-nav__link">
+        Behavioral Biases
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/personal-finance/" class="md-nav__link">
+        Personal Finance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_3" type="checkbox" id="__nav_10_3" >
+      
+      <label class="md-nav__link" for="__nav_10_3">
+        All about mutual funds
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="All about mutual funds" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_3">
+          <span class="md-nav__icon md-icon"></span>
+          All about mutual funds
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/" class="md-nav__link">
+        All About Mutual Funds
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/1.-what-is-a-mutual-fund/" class="md-nav__link">
+        1. What is a Mutual Fund?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/2.-types-of-mutual-funds/" class="md-nav__link">
+        2. Types of Mutual Funds
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/3.-what-and-why-of-mutual-fund-ratings/" class="md-nav__link">
+        3. What and Why of Mutual Fund Ratings
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/4.-how-to-select-a-mutual-fund-expanded-guidelines/" class="md-nav__link">
+        4. How to Select a Mutual Fund - Expanded Guidelines
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/4.-sip-and-mandates/" class="md-nav__link">
+        6. SIP and Mandates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/5.-some-analysis-using-long-term-equity-and-debt-funds-in-india/" class="md-nav__link">
+        8. Some analysis using long term equity and debt funds in India
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/7.-how-to-become-crorepati-using-mutual-funds/" class="md-nav__link">
+        7. How to Become Crorepati using Mutual Funds
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/analysis-long-term-equity-and-debt-funds-india/" class="md-nav__link">
+        Analysis using long term equity and debt funds in India
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/faqs-for-mutual-funds/" class="md-nav__link">
+        5. FAQs for Mutual Funds
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/faqs/" class="md-nav__link">
+        FAQs for Mutual Funds
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/how-to-become-crorepati-using-mfs/" class="md-nav__link">
+        How to Become Crorepati using Mutual Funds
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/how-to-select-mutual-fund/" class="md-nav__link">
+        How to Select a Mutual Fund
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/sip-and-mandates/" class="md-nav__link">
+        SIP and Mandates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/types-of-mutual-funds/" class="md-nav__link">
+        Types of Mutual Funds
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/what-and-why-mutual-fund-ratings/" class="md-nav__link">
+        What and Why of Mutual Fund Ratings
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/what-is-mutual-fund/" class="md-nav__link">
+        What is a Mutual Fund?
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_4" type="checkbox" id="__nav_10_4" >
+      
+      <label class="md-nav__link" for="__nav_10_4">
+        Eli5 series
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Eli5 series" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_4">
+          <span class="md-nav__icon md-icon"></span>
+          Eli5 series
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/eli5-series/" class="md-nav__link">
+        ELI5 Series
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/eli5-series/eli5-guide-to-selecting-an-equity-mutual-fund/" class="md-nav__link">
+        ELI5 guide to Selecting an Equity Mutual Fund
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/eli5-series/how-do-i-start-investing-in-mutual-funds-eli5-series/" class="md-nav__link">
+        How do I start investing in mutual funds \[ELI5 series\]
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/eli5-series/inflation/" class="md-nav__link">
+        Inflation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/eli5-series/life-insurance/" class="md-nav__link">
+        Life Insurance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/eli5-series/mis-selling-of-insurance-products/" class="md-nav__link">
+        Mis-selling of Insurance Products
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/eli5-series/time-value-of-money/" class="md-nav__link">
+        Time Value of Money
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_5" type="checkbox" id="__nav_10_5" >
+      
+      <label class="md-nav__link" for="__nav_10_5">
+        Insurance policies
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Insurance policies" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_5">
+          <span class="md-nav__icon md-icon"></span>
+          Insurance policies
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/" class="md-nav__link">
+        Insurance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/child-plan/" class="md-nav__link">
+        Child Plan
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/health/" class="md-nav__link">
+        Health
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/others-disability-home/" class="md-nav__link">
+        Others: Disability / Home
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_5_5" type="checkbox" id="__nav_10_5_5" >
+      
+      <label class="md-nav__link" for="__nav_10_5_5">
+        Life
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Life" data-md-level="3">
+        <label class="md-nav__title" for="__nav_10_5_5">
+          <span class="md-nav__icon md-icon"></span>
+          Life
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/life/" class="md-nav__link">
+        Life
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/life/faqs/" class="md-nav__link">
+        Some FAQs on Life Insurance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/life/how-to-evaluate-life-insurance-needs/" class="md-nav__link">
+        How to Evaluate Life Insurance Needs
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/life/links/" class="md-nav__link">
+        Links to Answers related to Life Insurance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/life/term-insurance/" class="md-nav__link">
+        Life Insurance: What it is exactly?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/life/ulip/" class="md-nav__link">
+        ULIP - Unit Linked Insurance Plan
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_6" type="checkbox" id="__nav_10_6" >
+      
+      <label class="md-nav__link" for="__nav_10_6">
+        Investment philosophy and strategy
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Investment philosophy and strategy" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_6">
+          <span class="md-nav__icon md-icon"></span>
+          Investment philosophy and strategy
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/" class="md-nav__link">
+        Investment Philosophy and Strategy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/a-simple-financial-planning-roadmap/" class="md-nav__link">
+        A simple Financial Planning Roadmap
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/are-you-a-stock-or-bond/" class="md-nav__link">
+        Are you a Stock or Bond?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/asset-rebalancing/" class="md-nav__link">
+        Asset Rebalancing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/assets-and-asset-allocation/" class="md-nav__link">
+        Assets and Asset Allocation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/basics-of-investment-strategy-plan/" class="md-nav__link">
+        Basics of Investment Strategy Plan
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/critical-mass/" class="md-nav__link">
+        Critical Mass
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/lumpsum-or-sip-stp/" class="md-nav__link">
+        Lumpsum or SIP/STP
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/various-types-of-risks-in-investments/" class="md-nav__link">
+        Various types of Risks in Investments
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_7" type="checkbox" id="__nav_10_7" >
+      
+      <label class="md-nav__link" for="__nav_10_7">
+        Retirement
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Retirement" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_7">
+          <span class="md-nav__icon md-icon"></span>
+          Retirement
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/" class="md-nav__link">
+        Retirement
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/diy-retirement/" class="md-nav__link">
+        Do-It-Yourself Retirement Plan
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/do-it-yourself-retirement-plan/" class="md-nav__link">
+        Do-It-Yourself Retirement Plan
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/long-term-portfolios-and-withdrawal-rate/" class="md-nav__link">
+        Studies of Long Term Portfolios and Retirement Withdrawal Rate Suggestions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/primer-on-retirement-planning/" class="md-nav__link">
+        Primer on Retirement Planning
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/readymade-pension-plan/" class="md-nav__link">
+        Why You should not Opt for a Readymade Pension Plan
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/retirement-planning/" class="md-nav__link">
+        Primer on Retirement Planning
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/studies-of-long-term-portfolios-and-retirement-withdrawal-rate-suggestions/" class="md-nav__link">
+        Studies of Long Term Portfolios and Retirement Withdrawal Rate Suggestions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/why-you-should-not-opt-for-a-readymade-pension-plan/" class="md-nav__link">
+        Why You should not Opt for a Readymade Pension Plan
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_8" type="checkbox" id="__nav_10_8" >
+      
+      <label class="md-nav__link" for="__nav_10_8">
+        Zero to investing
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Zero to investing" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_8">
+          <span class="md-nav__icon md-icon"></span>
+          Zero to investing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/zero-to-investing/" class="md-nav__link">
+        Zero to Investing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/zero-to-investing/getting-started/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/zero-to-investing/part-four-how-to-invest/" class="md-nav__link">
+        Part Four - How to Invest
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/zero-to-investing/part-three-spending-pattern/" class="md-nav__link">
+        Part Three - Spending Pattern
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/zero-to-investing/part-two-defensive-setup/" class="md-nav__link">
+        Part Two - Defensive Setup
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      <label class="md-nav__link" for="__nav_11">
+        Stocks
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Stocks" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          Stocks
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/" class="md-nav__link">
+        Introduction to the Stocks Series
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/can-you-beat-the-market/" class="md-nav__link">
+        Can You Beat the Market?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/due-diligence-checklist/" class="md-nav__link">
+        Due-Diligence Checklist
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/reading-an-annual-report/" class="md-nav__link">
+        Reading an Annual Report
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/researching-a-sector/" class="md-nav__link">
+        Researching a Sector
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/using-screeners/" class="md-nav__link">
+        Using Screeners
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11_7" type="checkbox" id="__nav_11_7" >
+      
+      <label class="md-nav__link" for="__nav_11_7">
+        Financial metrics and ratios
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Financial metrics and ratios" data-md-level="2">
+        <label class="md-nav__title" for="__nav_11_7">
+          <span class="md-nav__icon md-icon"></span>
+          Financial metrics and ratios
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/financial-metrics-and-ratios/" class="md-nav__link">
+        Financial Metrics and Ratios
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/financial-metrics-and-ratios/profitability/" class="md-nav__link">
+        Profitability
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11_8" type="checkbox" id="__nav_11_8" >
+      
+      <label class="md-nav__link" for="__nav_11_8">
+        Under progress
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Under progress" data-md-level="2">
+        <label class="md-nav__title" for="__nav_11_8">
+          <span class="md-nav__icon md-icon"></span>
+          Under progress
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/under-progress/" class="md-nav__link">
+        Work in Progress
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/under-progress/efficiency/" class="md-nav__link">
+        Efficiency
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/under-progress/liquidity-and-solvency/" class="md-nav__link">
+        Liquidity and Solvency
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/under-progress/understanding-the-business-of-a-company/" class="md-nav__link">
+        Diving Deeper into Businesses
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#intro" class="md-nav__link">
+    Intro 
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#discounting-and-xirr" class="md-nav__link">
+    Discounting and XIRR 
+  </a>
+  
+    <nav class="md-nav" aria-label="Discounting and XIRR ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#discounted-cashflow-table" class="md-nav__link">
+    Discounted Cashflow Table
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#net-present-value" class="md-nav__link">
+    Net Present Value
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#verifying-xirr-by-adding-up-discounted-cashflows" class="md-nav__link">
+    Verifying XIRR by Adding up Discounted Cashflows
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-to-solve-the-xirr-equation" class="md-nav__link">
+    How to Solve the XIRR Equation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-is-xirr-annualized-growth-rate" class="md-nav__link">
+    Why is XIRR annualized growth rate?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#visualization" class="md-nav__link">
+    Visualization 
+  </a>
+  
+    <nav class="md-nav" aria-label="Visualization ">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#two-transactions-cagr-and-xirr" class="md-nav__link">
+    Two Transactions - CAGR and XIRR
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#more-than-two-transactions" class="md-nav__link">
+    More than Two Transactions
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#recap-and-wrapping-up" class="md-nav__link">
+    Recap and Wrapping Up
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/indiainvestments/mkdocswiki/edit/master/docs/excel/quantifying-returns-cagr-and-xirr/xirr-math.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="a-rigorous-introduction-to-xirr">A Rigorous Introduction to XIRR<a class="headerlink" href="#a-rigorous-introduction-to-xirr" title="Permanent link">#</a></h1>
+<h2 id="intro">Intro <a id="Intro"></a><a class="headerlink" href="#intro" title="Permanent link">#</a></h2>
+<p>Now that we’ve gained some ideas about XIRR (e<strong>X</strong>tended <strong>I</strong>nternal <strong>R</strong>ate of <strong>R</strong>eturn), it’s time to formally introduce XIRR.</p>
+<p>XIRR is tightly coupled with concept of <em>discounting</em>.</p>
+<p>Discounting can be thought of as the opposite of <em>compounding</em>.</p>
+<h2 id="discounting-and-xirr">Discounting and XIRR <a id="Discounting-and-XIRR"></a><a class="headerlink" href="#discounting-and-xirr" title="Permanent link">#</a></h2>
+<p>Popularly, compounding formula is written as $$P\times(1+r)^t$$.</p>
+<p>Instead of $$P\times(1+r)^t$$, where $$(1+r)^t$$ is being multiplied with the value of $$P$$; in <em>discounting</em>, we’d do the opposite, to denote <strong>decay over time</strong>.</p>
+<p>Discounted value of $$P$$ after a time duration $$t$$, can be written as $$\displaystyle\frac{P}{(1 + r)^t}$$</p>
+<p>In case of compounding, with time, the final value increases.</p>
+<p>With discounting, as expected from the above formula, the decayed value gets lower as more time passes.</p>
+<h4 id="sample-cashflow-table">Sample Cashflow Table <a id="Sample-Cashflow-Table"></a><a class="headerlink" href="#sample-cashflow-table" title="Permanent link">#</a></h4>
+<p>Assume that we’ve a cashflow series, written like this:</p>
+<table>
+<thead>
+<tr>
+<th align="center">Date</th>
+<th align="center">Cashflow</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">$$t_0$$</td>
+<td align="center">$$P_0$$</td>
+</tr>
+<tr>
+<td align="center">$$t_1$$</td>
+<td align="center">$$P_1$$</td>
+</tr>
+<tr>
+<td align="center">$$t_2$$</td>
+<td align="center">$$P_2$$</td>
+</tr>
+<tr>
+<td align="center">$$t_3$$</td>
+<td align="center">$$P_3$$</td>
+</tr>
+<tr>
+<td align="center">......</td>
+<td align="center">......</td>
+</tr>
+<tr>
+<td align="center">$$t_{n−1}$$</td>
+<td align="center">$$P_{n-1}$$</td>
+</tr>
+</tbody>
+</table>
+<p>This format should be quite familiar. We’ve merely replaced the actual numbers with variables.</p>
+<h3 id="discounted-cashflow-table">Discounted Cashflow Table<a class="headerlink" href="#discounted-cashflow-table" title="Permanent link">#</a></h3>
+<p>We’d add one more column to, to add discounted values</p>
+<table>
+<thead>
+<tr>
+<th align="center">Date</th>
+<th align="center">Cashflow</th>
+<th align="center">Discounted Cashflow</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">$$t_0$$</td>
+<td align="center">$$P_0$$</td>
+<td align="center">$$P_0$$</td>
+</tr>
+<tr>
+<td align="center">$$t_1$$</td>
+<td align="center">$$P_1$$</td>
+<td align="center">$$\displaystyle \frac{P_1}{(1 + r)^{[\displaystyle\frac{(t_1 - t_0)}{\Delta T}]}}$$</td>
+</tr>
+<tr>
+<td align="center">$$t_2$$</td>
+<td align="center">$$P_2$$</td>
+<td align="center">$$\displaystyle\frac{P_2}{(1 + r)^{[\displaystyle\frac{(t_2 - t_0)}{\Delta T}]}}$$</td>
+</tr>
+<tr>
+<td align="center">$$t_3$$</td>
+<td align="center">$$P_3$$</td>
+<td align="center">$$\displaystyle\frac{P_3}{(1 + r)^{[\displaystyle\frac{(t_3 - t_0)}{\Delta T}]}}$$</td>
+</tr>
+<tr>
+<td align="center">......</td>
+<td align="center">......</td>
+<td align="center">......</td>
+</tr>
+<tr>
+<td align="center">$$t_{n−1}$$</td>
+<td align="center">$$P_{n−1}$$</td>
+<td align="center">$$\displaystyle\frac{P{n-1}}{(1 + r)^{[\displaystyle\frac{(t{n-1} - t_0)}{\Delta T}]}}$$</td>
+</tr>
+</tbody>
+</table>
+<p>Third column entries might look a bit cumbersome at first, but we’ve basically expanded on $$(1 + r)^X$$, where $$X$$ is $$\displaystyle\frac{(t - t_0)}{\Delta T}$$.</p>
+<p>This is effectively <em>normalized time</em>. Given two dates $$t$$ and $$t_0$$, $$(t - t_0)$$ is equivalent to number of days in between those two dates. And $$\Delta T$$ is a common factor (commonly, 1 year or 365 days).</p>
+<p>Then $$X$$ is number of years, where fractional values are allowed.</p>
+<p>Notice the first row of the above table, it’s just $$P_0$$. Because every discounting is being done corresponding to that date in first row, $$t_0$$, so trivially, the discounted value against itself same as the original value.</p>
+<details class="info" open="open"><summary>Info</summary><p>Remember from your school days, that <em>anything raised to the power of zero, is 1 in value</em>.</p>
+</details>
+<p>Mathematically, $$\displaystyle\frac{P_0}{(1 + r)^{[ \displaystyle\frac{(t_0 - t_0)}{\Delta T}]}} = P_0$$</p>
+<h3 id="net-present-value">Net Present Value<a class="headerlink" href="#net-present-value" title="Permanent link">#</a></h3>
+<p>NPV (<strong>N</strong>et <strong>P</strong>resent <strong>V</strong>alue) of the above cashflow is sum of all discounted cashflows:</p>
+<p>$$NPV = P_0 + \displaystyle\frac{P_1}{(1 + r)^{[\displaystyle\frac{(t_1 - t_0)}{\Delta T}]}} + \displaystyle\frac{P_2}{(1 + r)^{[\displaystyle\frac{(t_2 - t_0)}{\Delta T}]}} + \displaystyle\frac{P_3}{(1 + r)^{[\displaystyle\frac{(t_3 - t_0)}{\Delta T}]}} + ... + \displaystyle\frac{P_{n-1}}{(1 + r)^{[\displaystyle\frac{(t_{n-1} - t_0)}{\Delta T}]}}$$</p>
+<p>Which can also be written as</p>
+<p>$$NPV = \sum_{i = 0}^{n - 1} \displaystyle\frac{P_i}{(1 + r)^{[\frac{(t_i - t_0)}{\Delta T}]}}$$</p>
+<p>This formula has <em>summation</em> symbol $$\sum$$ , which allows us to write sum of a series of numbers in a succinct manner.</p>
+<h4 id="definition-of-xirr">Definition of XIRR <a id="Definition-of-XIRR"></a><a class="headerlink" href="#definition-of-xirr" title="Permanent link">#</a></h4>
+<p>XIRR of a given cashflow time-series data, is defined as value of $$r$$, the rate of discounting, such that <strong>NPV is 0</strong>.</p>
+<p>Let’s see what this means.</p>
+<p>As we’ve seen in the last chapter, in a cashflow, some entries would have positive and negative signs in front of those values; such that these values represent direction of cashflow.</p>
+<p>If we take the cashflow from last chapter itself, it’s $$-$$₹100,000 (1L INR) for first 10 years, then after another 10 years, ₹200,000 (2L INR) for next 10 years.</p>
+<p>Number of entries, is $$n=20$$.</p>
+<p>We fill the table up, mapping cashflow variables to values.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Date</th>
+<th align="center">Cashflow</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">$$t_0 = $$ 1st Jan 2021</td>
+<td align="center">$$P_0=$$ $$-$$<!-- -->100,000</td>
+</tr>
+<tr>
+<td align="center">$$t_1 = $$ 1st Jan 2022</td>
+<td align="center">$$P_1=$$ $$-$$<!-- -->100,000</td>
+</tr>
+<tr>
+<td align="center">$$t2=$$ 1st Jan 2023</td>
+<td align="center">$$P_2 =$$ $$-$$<!-- -->100,000</td>
+</tr>
+<tr>
+<td align="center">$$t_3 =$$ 1st Jan 2024</td>
+<td align="center">$$P_3 =$$ $$-$$<!-- -->100,000</td>
+</tr>
+<tr>
+<td align="center">$$t_4 =$$ 1st Jan 2025</td>
+<td align="center">$$P_4=$$ $$-$$<!-- -->100,000</td>
+</tr>
+<tr>
+<td align="center">$$t_5=$$ 1st Jan 2026</td>
+<td align="center">$$P_5=$$ $$-$$<!-- -->100,000</td>
+</tr>
+<tr>
+<td align="center">$$t_6=$$ 1st Jan 2027</td>
+<td align="center">$$P_6=$$ $$-$$<!-- -->100,000</td>
+</tr>
+<tr>
+<td align="center">$$t_7=$$ 1st Jan 2028</td>
+<td align="center">$$P_7=$$$$-$$<!-- -->100,000</td>
+</tr>
+<tr>
+<td align="center">$$t_8=$$ 1st Jan 2029</td>
+<td align="center">$$P_8 =$$ $$-$$<!-- -->100,000</td>
+</tr>
+<tr>
+<td align="center">$$t_9 =$$ 1st Jan 2030</td>
+<td align="center">$$P_9=$$ $$-$$<!-- -->100,000</td>
+</tr>
+<tr>
+<td align="center">$$t_{10} =$$ 1st Jan 2041</td>
+<td align="center">$$P_{10} =$$ 200,000</td>
+</tr>
+<tr>
+<td align="center">$$t_{11}=$$ 1st Jan 2042</td>
+<td align="center">$$P_{11} =$$ 200,000</td>
+</tr>
+<tr>
+<td align="center">$$t_{12}=$$ 1st Jan 2043</td>
+<td align="center">$$P_{12} =$$ 200,000</td>
+</tr>
+<tr>
+<td align="center">$$t_{13} =$$ 1st Jan 2044</td>
+<td align="center">$$P_{13} =$$ 200,000</td>
+</tr>
+<tr>
+<td align="center">$$t_{14} =$$ 1st Jan 2045</td>
+<td align="center">$$P_{14}=$$ 200,000</td>
+</tr>
+<tr>
+<td align="center">$$t_{15}=$$ 1st Jan 2046</td>
+<td align="center">$$P_{15} =$$ 200,000</td>
+</tr>
+<tr>
+<td align="center">$$t_{16} =$$ 1st Jan 2047</td>
+<td align="center">$$P_{16}=$$ 200,000</td>
+</tr>
+<tr>
+<td align="center">$$t_{17}=$$ 1st Jan 2048</td>
+<td align="center">$$P_{17}=$$ 200,000</td>
+</tr>
+<tr>
+<td align="center">$$t_{18}=$$ 1st Jan 2049</td>
+<td align="center">$$P_{18}=$$ 200,000</td>
+</tr>
+<tr>
+<td align="center">$$t_{19}=$$ 1st Jan 2050</td>
+<td align="center">$$P_{19}=$$ 200,000</td>
+</tr>
+</tbody>
+</table>
+<p>If we use the NPV formula, we’d need to settle the value for power index in the formula, $$\displaystyle\frac{(t - t_0)}{\Delta T}$$, where $$t$$can be $$t_0$$, $$t_1$$, $$t_2$$, $$...$$, $$t_{19}$$.</p>
+<p>We could reasonably approximate these as whole numbers.</p>
+<p>Plugging these in NPV formula, XIRR for this cashflow would be given by this equation:</p>
+<p>$$0 = 100000 \times (-1 - \displaystyle\frac{1}{(1 + r)^1} - \frac{1}{(1 + r)^2} - ... - \frac{1}{(1 + r)^9} + \frac{2}{(1 + r)^{10}} + \frac{2}{(1 + r)^{11}} + ... + \frac{2}{(1 + r)^{19}}) $$</p>
+<p>Then XIRR is solution for this equation, where $$r$$ is the unknown variable.</p>
+<p>We can verify that for XIRR, this equation results in zero.</p>
+<p>Another way to think of XIRR, is it’s a value of rate, that makes sum of discounted cash outflows, same as sum of discounted inflows.</p>
+<h3 id="verifying-xirr-by-adding-up-discounted-cashflows">Verifying XIRR by Adding up Discounted Cashflows<a class="headerlink" href="#verifying-xirr-by-adding-up-discounted-cashflows" title="Permanent link">#</a></h3>
+<p>We shall now go ahead and verify that this NPV equation indeed turns zero when we plug in the value of XIRR from in-built <code>xirr()</code> formula.</p>
+<p>We had already created a table and verified the XIRR to be $$3.52\%$$p.a.</p>
+<p><strong>Steps</strong>:</p>
+<ul>
+<li>
+<p>Create a new column in your original calculation from last chapter, next to <em>Cashflow</em> column.</p>
+</li>
+<li>
+<p>In the first row, fill out the formula as follows:</p>
+<div class="highlight"><pre><span></span><code>&lt;cashflow_value&gt; / POW((1 + XIRR_value), (&lt;date_value&gt; - &lt;first row&#39;s date value&gt; / 365))
+</code></pre></div>
+<p>Make sure to <em>lock the cell</em> with <code>$</code> notation, for cell ID pointing to</p>
+<ul>
+<li>XIRR value</li>
+<li>first row’s date value</li>
+</ul>
+</li>
+<li>
+<p>Use <em>drag and auto-fill</em> for other values of the discounted cashflow, though your spreadsheet might actually prompt the same with <em>smart fill</em>.</p>
+</li>
+<li>
+<p>Finally, invoke <code>SUM()</code> to compute summation of all discounted cashflow values in last column.</p>
+</li>
+</ul>
+<p>This video should help with above steps:</p>
+<p><lite-youtube class="youtube-player-dark" videoid="zDtcmcWD3O0"></lite-youtube></p>
+<p><lite-youtube class="youtube-player-light" videoid="9j5vqGYEo8E"></lite-youtube></p>
+<p>Final result should resemble this:</p>
+<p><img alt="Verifying XIRR value from summing up discounted cashflows - Dark Mode" class="dark-mode-image" src="/images/verifying-xirr-sum-of-discounted-cashflow.dark.png" /></p>
+<p><img alt="Verifying XIRR value from summing up discounted cashflows - Light Mode" class="light-mode-image" src="/images/verifying-xirr-sum-of-discounted-cashflow.light.png" /></p>
+<details class="warning" open="open"><summary>Warning</summary><p>You would be tempted to manually use 3.52% or 0.0352 instead of relying on output of <code>xirr()</code> formula. As you’d see, it would add up to a finite positive or negative value.</p>
+<p>Due to formatting, we are only seeing two places after decimal point. But actual computed value is something slightly different from exact 3.52%.</p>
+</details>
+<h3 id="how-to-solve-the-xirr-equation">How to Solve the XIRR Equation<a class="headerlink" href="#how-to-solve-the-xirr-equation" title="Permanent link">#</a></h3>
+<p>Given a value of XIRR, we can verify if it’s indeed satisfying the equation of NPV being zero.</p>
+<p>But given an equation, as above, can we derive the value of $$r$$?</p>
+<p>Turns out, even if it’s a single-variable equation; it’s not as simple as solving an algebraic equation.</p>
+<p>In essence, we need to use advanced approaches such as Newton-Raphson <em>approximation</em> to solve such equations, iteratively.</p>
+<p>It starts with a <em>guess</em> for the right value of XIRR. Then it plugs that value back into the NPV equation, to extract a new approximate value.</p>
+<p>After repeating this and extracting newer approximate values, it only gets more and more precise, through hit and trial.</p>
+<p>Eventually, the value stabilizes reaching correct answer for the problem at hand.</p>
+<p>A full treatment of Newton-Raphson method is beyond scope for this wiki, but even a cursory search in popular search engines would reveal enough materials that cover it in some depth.</p>
+<details class="info" open="open"><summary>Info</summary><p>The third argument in <code>xirr()</code> function is <code>rate_guess</code>, which if you provide, can speed up XIRR computation by reducing number of iteration it takes to reach correct value of XIRR.</p>
+<p>But it’s best avoided; because if you plug in a value as guess for rate, which is far removed, it would only serve as a means to increase number of iterations it takes to find the value of XIRR.</p>
+</details>
+<h3 id="why-is-xirr-annualized-growth-rate">Why is XIRR annualized growth rate?<a class="headerlink" href="#why-is-xirr-annualized-growth-rate" title="Permanent link">#</a></h3>
+<p>Because the $$\Delta T$$ value is set to 1 year or 365 days.</p>
+<p>We could, however, change that to 1 month or 1 decade; and get rates per month, or rates per decade.</p>
+<h2 id="visualization">Visualization <a id="Visualization"></a><a class="headerlink" href="#visualization" title="Permanent link">#</a></h2>
+<p>Now that we’ve a formal mathematical understanding of what XIRR is; it’s instructive to understand XIRR visually.</p>
+<p>This would help us build a mental model of XIRR, intuitively, because it might not always be possible to have enough information to invoke <code>xirr()</code> function and obtain exact value of it.</p>
+<h3 id="two-transactions-cagr-and-xirr">Two Transactions - CAGR and XIRR<a class="headerlink" href="#two-transactions-cagr-and-xirr" title="Permanent link">#</a></h3>
+<p>Let’s begin with a simple use-case, where a set of cashflows is basically only two transactions.</p>
+<p>One purchase, and one sell or redeem-able account value.</p>
+<p>It could be a lumpsum purchase transaction for a bond or a stock or even a mutual fund / ETF, and after the first purchase, there have been no transactions on that account.</p>
+<p>Let’s consider an investor had purchased HDFC (NSE: HDFC) stock at a price of $$₹1113.40$$, on 1st April 2016, for quantity of 1 share.</p>
+<p>Then total invested amount is same as share price at the time of purchase.</p>
+<p>Also assume this investor has continued to hold on to this share of HDFC. As on today, it’d have a different value from its valuation at the time of purchase.</p>
+<p>We can model it as one purchase transaction (negative cashflow, because money is going away from end user), and a potential redemption transaction of today’s value.</p>
+<p>At the time of writing this, this value is $$₹2515.20$$ per share, as on 1st April 2021.</p>
+<table>
+<thead>
+<tr>
+<th align="center">Date</th>
+<th align="center">Cashflow</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="center">01-Apr-2016</td>
+<td align="center">$$-$$<!-- -->1113.40</td>
+</tr>
+<tr>
+<td align="center">01-Apr-2021</td>
+<td align="center">2515.20</td>
+</tr>
+</tbody>
+</table>
+<p>It effectively means, if the investor were to sell the share when price is ₹2515.20, they’d receive ₹2515.20 in liquid cash in their account. We’re ignoring STT (<strong>S</strong>ecurity <strong>T</strong>ransaction <strong>T</strong>ax), brokerage, and other fees for now.</p>
+<p>Then XIRR of these transactions can be computed easily, by inserting these numbers from the table into a spr<strong>e</strong>adsheet, invoking the <code>xirr()</code> formula.</p>
+<p>We’d get XIRR as $$17.69\%$$ <strong>p.a.</strong></p>
+<p><img alt="XIRR of only two transactions - Dark Mode" class="dark-mode-image" src="/images/xirr-only-two-transactions-hdfc.dark.png" /></p>
+<p><img alt="XIRR of only two transactions - Light Mode" class="light-mode-image" src="/images/xirr-only-two-transactions-hdfc.light.png" /></p>
+<p>At the same time, we could obtain CAGR of underlying asset, HDFC shares, over 5 years, which also comes out to be $$17.69\%$$ <strong>p.a.</strong></p>
+<p><img alt="CAGR computed with RRI function - Dark Mode" class="dark-mode-image" src="/images/hdfc-5y-cagr.dark.png" /></p>
+<p><img alt="CAGR computed with RRI function - Light Mode" class="light-mode-image" src="/images/hdc-5y-cagr.light.png" /></p>
+<p><strong>They are the same!</strong></p>
+<details class="info" open="open"><summary>Info</summary><p>You might have noticed that output of <code>RRI()</code> function is slightly different from output of XIRR function. This is because those two dates are not exactly 5 years apart, you’ve to also count the leap days in between.</p>
+</details>
+<p><strong>CAGR of an asset between two dates, can be computed using XIRR function, by creating a purchase transaction at the start date, and an imaginary sell transaction on the end date.</strong></p>
+<p>This is why most spreadsheet or excel applications don’t include a dedicated CAGR function ****You only have to invert the sign of first row entry of value!</p>
+<p><img alt="Discounted cashflow for only two transactions - Dark Mode" class="dark-mode-image" src="/images/xirr-only-two-transactions.dark.png" /></p>
+<p><img alt="Discounted cashflow for only two transactions - Dark Mode" class="light-mode-image" src="/images/xirr-only-two-transactions.light.png" /></p>
+<p>We can mathematically prove it as well.</p>
+<p>Recall that formula of CAGR is:</p>
+<p>$$V_{final} = V_{initial} \times (1 + CAGR)^n$$</p>
+<p>$$n$$ is number of years, where we’re considering 1 year as unit of time.</p>
+<p>Then equivalent transactions would be of values $$-V_{initial}$$ and $$V_{final}$$</p>
+<p>Plugging these in the NPV equation for XIRR, we get</p>
+<p>$$\displaystyle\frac{V_{final}}{(1 + XIRR)^n} - \frac{V_{initial}}{(1 + XIRR)^0} = 0$$</p>
+<p>Rearranging, and keeping in mind that power raised to $$0$$ means $$1$$, we get</p>
+<p>$$V_{final} = V_{initial} \times (1 + XIRR)^n$$</p>
+<p>Therefore, CAGR and XIRR would have same values.</p>
+<details class="warning" open="open"><summary>Warning</summary><p>CAGR $$\neq$$ XIRR</p>
+<p>We've simply found a case, where value of CAGR for an asset between two dates; can be same as XIRR of an imaginary portfolio of two transactions, on those two dates.</p>
+<p>This would be true for all investible assets, for any two dates; as long as it can be modeled as two transactions (one purchase, one sell).</p>
+<p>But <em>CAGR of a portfolio</em>, is a meaningless metric to look for. Asset has CAGR, portfolios have XIRR.</p>
+</details>
+<p>This makes sense intuitively as well.</p>
+<p>XIRR of a portfolio where investor has invested only once and redeemed once (or can redeem full amount if they choose to), is same as rate of growth of underlying asset over same period - which is CAGR.</p>
+<h3 id="more-than-two-transactions">More than Two Transactions<a class="headerlink" href="#more-than-two-transactions" title="Permanent link">#</a></h3>
+<p>What if an investor has more transactions, mix of buy / sell etc.?</p>
+<p>This is usually how normal portfolios look like.</p>
+<p>Even if one were to make a bank fixed deposit, there can be year-end TDS, resulting in cash outflow from the deposit account; which would end up having multiple transactions in that portfolio.</p>
+<p><img alt="Discounting cashflows for XIRR in case of more that two transactions - Dark Mode" class="dark-mode-image" src="/images/xirr-multiple-transactions.dark.png" /></p>
+<p><img alt="Discounting cashflows for XIRR in case of more that two transactions - Light Mode" class="light-mode-image" src="/images/xirr-multiple-transactions.light.png" /></p>
+<p>Dotted line shows actual numeric value, of each transaction’s cashflow.</p>
+<p>While, solid lines indicate how these values would be after discounting using the decay formulation.</p>
+<p>You can see the decay as a result of discounting.</p>
+<p>To understand why the decay over time moves like that, we can plot similar graphs from our spreadsheets</p>
+<p><strong>Steps</strong>:</p>
+<ul>
+<li>Select the three columns of data on dates, cashflow, and discounted cashflow that we’d worked on earlier, to validate XIRR.</li>
+<li>Insert chart from menubar or toolbar</li>
+<li>Switch to bar chart</li>
+</ul>
+<p>Here’s a short video to help you out, though it’s quite straight-forward, if you’ve followed along thus far:</p>
+<p><lite-youtube class="youtube-player-dark" videoid="u10zyhm7FpQ"></lite-youtube></p>
+<p><lite-youtube class="youtube-player-light" videoid="-ujqL8h8cAI"></lite-youtube></p>
+<p>Final plot should look like this:</p>
+<p><img alt="Cashflow and Discounted Cashflow vs Years - Dark Mode" class="dark-mode-image" src="/images/cashflow-discounted-cashflow-chart.dark.png" /></p>
+<p><img alt="Cashflow and Discounted Cashflow vs Years - Light Mode" class="light-mode-image" src="/images/cashflow-discounted-cashflow-chart.light.png" /></p>
+<p>While the blue lines in the above plot are of same heights for positive cashflow values and negative values; the red lines are where we see values being discounted more and more over time.</p>
+<h2 id="recap-and-wrapping-up"><strong>Recap and Wrapping Up</strong><a class="headerlink" href="#recap-and-wrapping-up" title="Permanent link">#</a></h2>
+<p>We learned various aspects of XIRR in the last chapter, using an example and output of in-built <code>xirr()</code> function.</p>
+<p>Now we can cross-validate these, how these follow from definition of XIRR naturally:</p>
+<ul>
+<li>
+<p><strong>XIRR doesn’t depend on exact dates, rather relative differences between dates of transactions</strong></p>
+<p>This is because in NPV equation, the power terms are normalized differences in time, and not absolute values of time points ($$t_0$$, $$t_1$$, $$t_2$$, $$t_3$$ etc.).</p>
+</li>
+<li>
+<p><strong>XIRR doesn’t depend on exact value of cashflow amounts, only relative scaling within those numbers</strong>.</p>
+<p>In other words, if every cashflow amounts were multiplied by some arbitrary number, it won’t change the value of XIRR.</p>
+<p>This is readily verifiable; as in the NPV equation, the right hand side is $$0$$. Hence multiplying both sides by a constant co-efficient has no effect.</p>
+</li>
+<li>
+<p><strong>Moving up payout schedule improves XIRR</strong></p>
+<p>Moving up schedule of payout (positive cashflows) means the discounted value of those transactions become higher; as $$(t−t_0)$$ decrease.</p>
+<p>To keep the equation at zero, now the base of the fraction would have to go up, which is $$(1+r)$$. In other words, XIRR would have to go up.</p>
+</li>
+</ul>
+<p>Similarly, we can refer to the NPV equation of XIRR formulation, and validate our erstwhile understanding of XIRR behavior.</p>
+<p>You might have noticed that we didn’t do any semi-log plots with cashflow values.</p>
+<p>This is because NPV equation is an equation that lists formulas as sum of decayed entities.</p>
+<p>There’s no mathematical formula to simplify $$\log(A+B)$$, that relates to $$\log⁡A$$ or $$\log⁡B$$ in any way, in general.</p>
+<p>Next chapter we would learn about applying XIRR in financial decision-making, in the wild. We’d consider real-world scenarios, and approach decision-making on those, by computing their XIRR; and comparing with XIRR of alternative investment avenues.</p>
+                
+                  
+                    
+
+<hr>
+<div class="md-source-date">
+  <small>
+    
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 4, 2021</span>
+      
+        <br>Created: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">June 1, 2021</span> 
+      
+    
+  </small>
+</div>
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" title="Back to top" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+          </a>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../cagr/" class="md-footer__link md-footer__link--prev" aria-label="Previous: CAGR: Point-to-Point Annualized Returns" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              CAGR: Point-to-Point Annualized Returns
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../xirr/" class="md-footer__link md-footer__link--next" aria-label="Next: A Gentle Introduction to XIRR" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              A Gentle Introduction to XIRR
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            &copy; Licensed Under <a href=https://creativecommons.org/licenses/by-nc/4.0/> CC BY-NC 4.0</a>
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+      <a href="https://www.reddit.com/r/IndiaInvestments/" target="_blank" rel="noopener" title="IndiaInvestments on Reddit" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M201.5 305.5c-13.8 0-24.9-11.1-24.9-24.6 0-13.8 11.1-24.9 24.9-24.9 13.6 0 24.6 11.1 24.6 24.9 0 13.6-11.1 24.6-24.6 24.6zM504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zm-132.3-41.2c-9.4 0-17.7 3.9-23.8 10-22.4-15.5-52.6-25.5-86.1-26.6l17.4-78.3 55.4 12.5c0 13.6 11.1 24.6 24.6 24.6 13.8 0 24.9-11.3 24.9-24.9s-11.1-24.9-24.9-24.9c-9.7 0-18 5.8-22.1 13.8l-61.2-13.6c-3-.8-6.1 1.4-6.9 4.4l-19.1 86.4c-33.2 1.4-63.1 11.3-85.5 26.8-6.1-6.4-14.7-10.2-24.1-10.2-34.9 0-46.3 46.9-14.4 62.8-1.1 5-1.7 10.2-1.7 15.5 0 52.6 59.2 95.2 132 95.2 73.1 0 132.3-42.6 132.3-95.2 0-5.3-.6-10.8-1.9-15.8 31.3-16 19.8-62.5-14.9-62.5zM302.8 331c-18.2 18.2-76.1 17.9-93.6 0-2.2-2.2-6.1-2.2-8.3 0-2.5 2.5-2.5 6.4 0 8.6 22.8 22.8 87.3 22.8 110.2 0 2.5-2.2 2.5-6.1 0-8.6-2.2-2.2-6.1-2.2-8.3 0zm7.7-75c-13.6 0-24.6 11.1-24.6 24.9 0 13.6 11.1 24.6 24.6 24.6 13.8 0 24.9-11.1 24.9-24.6 0-13.8-11-24.9-24.9-24.9z"/></svg>
+      </a>
+    
+      
+      
+      <a href="https://discord.gg/hqBNg4u" target="_blank" rel="noopener" title="IndiaInvestments on Discord" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M297.216 243.2c0 15.616-11.52 28.416-26.112 28.416-14.336 0-26.112-12.8-26.112-28.416s11.52-28.416 26.112-28.416c14.592 0 26.112 12.8 26.112 28.416zm-119.552-28.416c-14.592 0-26.112 12.8-26.112 28.416s11.776 28.416 26.112 28.416c14.592 0 26.112-12.8 26.112-28.416.256-15.616-11.52-28.416-26.112-28.416zM448 52.736V512c-64.494-56.994-43.868-38.128-118.784-107.776l13.568 47.36H52.48C23.552 451.584 0 428.032 0 398.848V52.736C0 23.552 23.552 0 52.48 0h343.04C424.448 0 448 23.552 448 52.736zm-72.96 242.688c0-82.432-36.864-149.248-36.864-149.248-36.864-27.648-71.936-26.88-71.936-26.88l-3.584 4.096c43.52 13.312 63.744 32.512 63.744 32.512-60.811-33.329-132.244-33.335-191.232-7.424-9.472 4.352-15.104 7.424-15.104 7.424s21.248-20.224 67.328-33.536l-2.56-3.072s-35.072-.768-71.936 26.88c0 0-36.864 66.816-36.864 149.248 0 0 21.504 37.12 78.08 38.912 0 0 9.472-11.52 17.152-21.248-32.512-9.728-44.8-30.208-44.8-30.208 3.766 2.636 9.976 6.053 10.496 6.4 43.21 24.198 104.588 32.126 159.744 8.96 8.96-3.328 18.944-8.192 29.44-15.104 0 0-12.8 20.992-46.336 30.464 7.68 9.728 16.896 20.736 16.896 20.736 56.576-1.792 78.336-38.912 78.336-38.912z"/></svg>
+      </a>
+    
+      
+      
+      <a href="https://github.com/indiainvestments" target="_blank" rel="noopener" title="IndiaInvestments on GitHub" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+      <a href="mailto:hello@indiainvestments.wiki" target="_blank" rel="noopener" title="Send a Mail to IndiaInvestments" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant", "navigation.sections", "navigation.top", "header.autohide"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.82b56eb2.min.js"></script>
+      
+        <script src="../../../js/lite-yt-embed.js"></script>
+      
+    
+  </body>
+</html>

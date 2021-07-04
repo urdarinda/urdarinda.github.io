@@ -1,0 +1,3519 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Closer look at CSV format, and how to operate on these to display in a table format, using SPLIT() and TRANSPOSE() functions">
+      
+      
+      
+      
+        <link rel="canonical" href="https://staging.indiainvestments.wiki/excel/using-external-data-working-with-csv-format/csv-format/">
+      
+      <link rel="icon" href="../../../images/favicon.ico">
+      <meta name="generator" content="mkdocs-1.2.1, mkdocs-material-7.1.9">
+    
+    
+      
+        <title>CSV Format - India Investments Wiki</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.ca7ac06f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.f1a3b89f.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,400i,700%7CFira+Code&display=fallback">
+        <style>:root{--md-text-font-family:"Inter";--md-code-font-family:"Fira Code"}</style>
+      
+    
+    
+    
+      <link rel="stylesheet" href="../../../css/image_toggle.css">
+    
+      <link rel="stylesheet" href="../../../css/youtube_toggle.css">
+    
+      <link rel="stylesheet" href="../../../css/lite-yt-embed.css">
+    
+    
+      
+
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <script>function __prefix(e){return new URL("../../..",location).pathname+"."+e}function __get(e,t=localStorage){return JSON.parse(t.getItem(__prefix(e)))}</script>
+    
+      <script>var palette=__get("__palette");if(null!==palette&&"object"==typeof palette.color)for(var key in palette.color)document.body.setAttribute("data-md-color-"+key,palette.color[key])</script>
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#csv-format" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../../.." title="India Investments Wiki" class="md-header__button md-logo" aria-label="India Investments Wiki" data-md-component="logo">
+      
+  <img src="../../../images/logo.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            India Investments Wiki
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              CSV Format
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      <form class="md-header__option" data-md-component="palette">
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Dark Mode"  type="radio" name="__palette" id="__palette_1">
+          
+            <label class="md-header__button md-icon" title="Dark Mode" for="__palette_2" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3 3.19.09m3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95 2.06.05m-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31z"/></svg>
+            </label>
+          
+        
+          
+          
+          <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Light Mode"  type="radio" name="__palette" id="__palette_2">
+          
+            <label class="md-header__button md-icon" title="Light Mode" for="__palette_1" hidden>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5c-.84 0-1.65.15-2.39.42L12 2M3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29L3.34 7m.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14L3.36 17M20.65 7l-1.77 3.79a7.023 7.023 0 0 0-2.38-4.15l4.15.36m-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29L20.64 17M12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44L12 22z"/></svg>
+            </label>
+          
+        
+      </form>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        
+<a href="https://github.com/indiainvestments/mkdocswiki/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    India Investments Wiki
+  </div>
+</a>
+      </div>
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../../.." title="India Investments Wiki" class="md-nav__button md-logo" aria-label="India Investments Wiki" data-md-component="logo">
+      
+  <img src="../../../images/logo.png" alt="logo">
+
+    </a>
+    India Investments Wiki
+  </label>
+  
+    <div class="md-nav__source">
+      
+<a href="https://github.com/indiainvestments/mkdocswiki/" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+  </div>
+  <div class="md-source__repository">
+    India Investments Wiki
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        Introduction
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../disclaimers-and-disclosures/" class="md-nav__link">
+        Disclaimers and Disclosures
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_3" type="checkbox" id="__nav_3" >
+      
+      <label class="md-nav__link" for="__nav_3">
+        Bonds
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Bonds" data-md-level="1">
+        <label class="md-nav__title" for="__nav_3">
+          <span class="md-nav__icon md-icon"></span>
+          Bonds
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bonds/" class="md-nav__link">
+        Bond Basics
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bonds/corporate-bonds/" class="md-nav__link">
+        Corporate Bonds
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../bonds/section-2-government-securities/" class="md-nav__link">
+        Government Securities
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4" type="checkbox" id="__nav_4" >
+      
+      <label class="md-nav__link" for="__nav_4">
+        Contributors
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Contributors" data-md-level="1">
+        <label class="md-nav__title" for="__nav_4">
+          <span class="md-nav__icon md-icon"></span>
+          Contributors
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/" class="md-nav__link">
+        How Can I Start Contributing?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/how-to-link-faq-via-bot-in-discord/" class="md-nav__link">
+        How to link FAQ via bot in Discord
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_3" type="checkbox" id="__nav_4_3" >
+      
+      <label class="md-nav__link" for="__nav_4_3">
+        Style guides
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Style guides" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_3">
+          <span class="md-nav__icon md-icon"></span>
+          Style guides
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/style-guides/" class="md-nav__link">
+        Style Guides
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/style-guides/excel-series-style-guide/" class="md-nav__link">
+        Excel Series Style Guide
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/style-guides/faq-style-guide-1/" class="md-nav__link">
+        FAQ Style Guide
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/style-guides/general-style-guide/" class="md-nav__link">
+        General Style Guide
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/style-guides/how-to-style-guide/" class="md-nav__link">
+        How To Style Guide
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/style-guides/stocks-style-guide/" class="md-nav__link">
+        Stocks Style Guide
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_4_4" type="checkbox" id="__nav_4_4" >
+      
+      <label class="md-nav__link" for="__nav_4_4">
+        What is a contributor license agreement and why are we using it
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="What is a contributor license agreement and why are we using it" data-md-level="2">
+        <label class="md-nav__title" for="__nav_4_4">
+          <span class="md-nav__icon md-icon"></span>
+          What is a contributor license agreement and why are we using it
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/what-is-a-contributor-license-agreement-and-why-are-we-using-it/" class="md-nav__link">
+        What is a Contributor License Agreement and why are we using it?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributors/what-is-a-contributor-license-agreement-and-why-are-we-using-it/contributor-license-agreement/" class="md-nav__link">
+        Contributor License Agreement
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_5" type="checkbox" id="__nav_5" >
+      
+      <label class="md-nav__link" for="__nav_5">
+        Discord and reddit
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Discord and reddit" data-md-level="1">
+        <label class="md-nav__title" for="__nav_5">
+          <span class="md-nav__icon md-icon"></span>
+          Discord and reddit
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../discord-and-reddit/im-unable-to-send-messages-to-stocks-fundamentals-channel-on-discord-why/" class="md-nav__link">
+        I'm unable to send messages to stocks-fundamentals channel on Discord. Why?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../discord-and-reddit/search-wiki-discord/" class="md-nav__link">
+        How to Search the Wiki From Discord
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6" type="checkbox" id="__nav_6" checked>
+      
+      <label class="md-nav__link" for="__nav_6">
+        Excel
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Excel" data-md-level="1">
+        <label class="md-nav__title" for="__nav_6">
+          <span class="md-nav__icon md-icon"></span>
+          Excel
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../" class="md-nav__link">
+        Excel for Fun and Profit
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../reactivity/" class="md-nav__link">
+        Reactive UI & Updates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../using-external-data-google-finance/" class="md-nav__link">
+        Using External Data : Google Finance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_4" type="checkbox" id="__nav_6_4" >
+      
+      <label class="md-nav__link" for="__nav_6_4">
+        Quantifying returns cagr and xirr
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Quantifying returns cagr and xirr" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_4">
+          <span class="md-nav__icon md-icon"></span>
+          Quantifying returns cagr and xirr
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quantifying-returns-cagr-and-xirr/" class="md-nav__link">
+        Quantifying Returns: CAGR and XIRR
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quantifying-returns-cagr-and-xirr/cagr/" class="md-nav__link">
+        CAGR: Point-to-Point Annualized Returns
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quantifying-returns-cagr-and-xirr/xirr-math/" class="md-nav__link">
+        A Rigorous Introduction to XIRR
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../quantifying-returns-cagr-and-xirr/xirr/" class="md-nav__link">
+        A Gentle Introduction to XIRR
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_6_5" type="checkbox" id="__nav_6_5" checked>
+      
+      <label class="md-nav__link" for="__nav_6_5">
+        Using external data working with csv format
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Using external data working with csv format" data-md-level="2">
+        <label class="md-nav__title" for="__nav_6_5">
+          <span class="md-nav__icon md-icon"></span>
+          Using external data working with csv format
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        Using External Data : Working with CSV Format
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../computing-ltcg-eligible-equity-units/" class="md-nav__link">
+        Computing LTCG Eligible Equity Units
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          CSV Format
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        CSV Format
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-to-csv-format" class="md-nav__link">
+    Introduction to CSV format
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-only-a-comma" class="md-nav__link">
+    Why only a comma?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-in-excel" class="md-nav__link">
+    Using in Excel
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-perfect-split" class="md-nav__link">
+    A Perfect SPLIT
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#splitting-entire-csv-dataset" class="md-nav__link">
+    Splitting entire CSV dataset
+  </a>
+  
+    <nav class="md-nav" aria-label="Splitting entire CSV dataset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#this-isnt-going-to-work" class="md-nav__link">
+    This isn’t going to work
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transpose" class="md-nav__link">
+    Transpose
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manual-option" class="md-nav__link">
+    Manual Option
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternate-option-automated-processing" class="md-nav__link">
+    Alternate Option : Automated Processing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#importing-a-csv-file-common-option" class="md-nav__link">
+    Importing a CSV file : Common Option
+  </a>
+  
+    <nav class="md-nav" aria-label="Importing a CSV file : Common Option">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whats-going-on-here-why-did-we-not-just-do-this-from-the-beginning" class="md-nav__link">
+    What’s going on here? Why did we not just do this from the beginning?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wrapping-up" class="md-nav__link">
+    Wrapping Up
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../process-for-estimating-tax/" class="md-nav__link">
+        Process for Estimating Tax
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7" type="checkbox" id="__nav_7" >
+      
+      <label class="md-nav__link" for="__nav_7">
+        Faqs
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Faqs" data-md-level="1">
+        <label class="md-nav__title" for="__nav_7">
+          <span class="md-nav__icon md-icon"></span>
+          Faqs
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/" class="md-nav__link">
+        FAQs
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_2" type="checkbox" id="__nav_7_2" >
+      
+      <label class="md-nav__link" for="__nav_7_2">
+        Foreign invest
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Foreign invest" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_2">
+          <span class="md-nav__icon md-icon"></span>
+          Foreign invest
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/foreign-invest/" class="md-nav__link">
+        Foreign Investing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/foreign-invest/how-should-i-invest-in-us-equity/" class="md-nav__link">
+        How should I invest in US equity?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/foreign-invest/why-should-i-invest-in-the-us-markets/" class="md-nav__link">
+        Why should I invest in the US markets?
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_3" type="checkbox" id="__nav_7_3" >
+      
+      <label class="md-nav__link" for="__nav_7_3">
+        Insurance
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Insurance" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_3">
+          <span class="md-nav__icon md-icon"></span>
+          Insurance
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/insurance/" class="md-nav__link">
+        Insurance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/insurance/do-i-need-my-own-health-insurance-employer-already-has-group-policy/" class="md-nav__link">
+        Do I need my own health insurance? Employer already has group policy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/insurance/extra-premium-term-cover/" class="md-nav__link">
+        Is it worth paying extra premium for term insurance?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/insurance/opinions-on-investing-in-smart-wealth-plan-by-bank/" class="md-nav__link">
+        Opinions on investing in smart wealth plan by bank?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/insurance/should-i-invest-in-this-lic-policy/" class="md-nav__link">
+        Should I invest in this LIC policy?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/insurance/top-up-vs-super-top-up/" class="md-nav__link">
+        Should I take top-up policy or super top-up?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/insurance/up-to-what-age-should-i-take-term-cover/" class="md-nav__link">
+        Up to what age should I take term cover?
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_4" type="checkbox" id="__nav_7_4" >
+      
+      <label class="md-nav__link" for="__nav_7_4">
+        Mfs
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Mfs" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_4">
+          <span class="md-nav__icon md-icon"></span>
+          Mfs
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/" class="md-nav__link">
+        Mutual Funds and ETFs
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/best-mutual-fund-app-for-investments/" class="md-nav__link">
+        What is the best mutual fund app for investments?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/direct-vs-regular/" class="md-nav__link">
+        Why should I invest in Direct Plans instead of Regular Plans?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/ive-to-invest-in-elss-for-80c-tax-saving.-which-fund-s-should-i-pick/" class="md-nav__link">
+        I’ve to invest in ELSS for 80C tax saving. Which fund(s) should I pick?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/lumpsum-investment-vs-sip-dca/" class="md-nav__link">
+        Lumpsum investment vs SIP/DCA
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/should-i-get-a-demat-account-to-buy-units-in-mutual-funds/" class="md-nav__link">
+        Should I get a Demat Account to buy units in Mutual Funds?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/whats-the-best-mutual-fund-i-can-invest-in/" class="md-nav__link">
+        What’s the best mutual fund I can invest in?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/which-date-s-is-are-best-for-sip-in-a-month/" class="md-nav__link">
+        Which date(s) is/are best for SIP in a month?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/mfs/why-are-index-funds-in-india-not-as-cheap-as-vanguards-index-funds-and-etfs/" class="md-nav__link">
+        Why are Index Funds in India not as cheap as Vanguard's Index Funds and ETFs?
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_5" type="checkbox" id="__nav_7_5" >
+      
+      <label class="md-nav__link" for="__nav_7_5">
+        Misc
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Misc" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_5">
+          <span class="md-nav__icon md-icon"></span>
+          Misc
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/misc/" class="md-nav__link">
+        Miscellaneous
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/misc/explain-like-i-am-5-eli5-chit-funds/" class="md-nav__link">
+        What are chit funds? Should I invest?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/misc/is-gold-a-good-investment-now-it-has-gone-up-50-this-year/" class="md-nav__link">
+        Is Gold a good investment now? It has gone up ~50% this year
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/misc/where-can-i-park-money-for-a-few-days-a-few-months-or-a-few-years/" class="md-nav__link">
+        Where can I park money for a few days, a few months, or a few years?
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_6" type="checkbox" id="__nav_7_6" >
+      
+      <label class="md-nav__link" for="__nav_7_6">
+        Stocks
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Stocks" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_6">
+          <span class="md-nav__icon md-icon"></span>
+          Stocks
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/stocks/" class="md-nav__link">
+        Stocks
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/stocks/is-smallcase-a-good-investment-returns-look-good/" class="md-nav__link">
+        Should I invest in smallcase?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/stocks/stock-market-crash-which-stocks-should-i-buy/" class="md-nav__link">
+        The Stock Market Has Crashed. Which Stocks Should I Buy?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/stocks/what-is-the-best-app-for-buying-or-trading-stocks/" class="md-nav__link">
+        What is the best app for buying or trading stocks?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/stocks/which-screener/" class="md-nav__link">
+        Which screener(s) should I use?
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_7_7" type="checkbox" id="__nav_7_7" >
+      
+      <label class="md-nav__link" for="__nav_7_7">
+        Tax
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Tax" data-md-level="2">
+        <label class="md-nav__title" for="__nav_7_7">
+          <span class="md-nav__icon md-icon"></span>
+          Tax
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/tax/" class="md-nav__link">
+        Tax
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../faqs/tax/i-dont-have-any-tax-to-pay.-do-i-still-have-to-file-itr/" class="md-nav__link">
+        I don't have any tax to pay. Do I still have to file ITR?
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_8" type="checkbox" id="__nav_8" >
+      
+      <label class="md-nav__link" for="__nav_8">
+        How to
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="How to" data-md-level="1">
+        <label class="md-nav__title" for="__nav_8">
+          <span class="md-nav__icon md-icon"></span>
+          How to
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-to/" class="md-nav__link">
+        How To
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-to/how-to-file-sebi-scores-complaint/" class="md-nav__link">
+        How to file SEBI SCORES complaint?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-to/how-to-move-from-one-mutual-fund-platform-to-another/" class="md-nav__link">
+        How to move from one mutual fund platform to another
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-to/how-to-pay-advance-tax/" class="md-nav__link">
+        How to Pay Advance Tax
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-to/how-to-switch-the-mutual-fund-from-regular-to-direct-plan/" class="md-nav__link">
+        How to switch a Mutual Fund from Regular to Direct Plan
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-to/how-to-transfer-shares-from-one-demat-account-to-another/" class="md-nav__link">
+        How to transfer shares from one demat account to another
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-to/rematerialize-demat-mf/" class="md-nav__link">
+        How to rematerialize mutual fund from demat form
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../how-to/update-nominee-details/" class="md-nav__link">
+        How to Update Nominee Details?
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_9" type="checkbox" id="__nav_9" >
+      
+      <label class="md-nav__link" for="__nav_9">
+        Misc
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Misc" data-md-level="1">
+        <label class="md-nav__title" for="__nav_9">
+          <span class="md-nav__icon md-icon"></span>
+          Misc
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../misc/miscellaneous/" class="md-nav__link">
+        Miscellaneous
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../misc/recommended-reading/" class="md-nav__link">
+        Recommended Reading
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../misc/us-investing/" class="md-nav__link">
+        US Investing
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10" type="checkbox" id="__nav_10" >
+      
+      <label class="md-nav__link" for="__nav_10">
+        Start here
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Start here" data-md-level="1">
+        <label class="md-nav__title" for="__nav_10">
+          <span class="md-nav__icon md-icon"></span>
+          Start here
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/behavioral-biases/" class="md-nav__link">
+        Behavioral Biases
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/personal-finance/" class="md-nav__link">
+        Personal Finance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_3" type="checkbox" id="__nav_10_3" >
+      
+      <label class="md-nav__link" for="__nav_10_3">
+        All about mutual funds
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="All about mutual funds" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_3">
+          <span class="md-nav__icon md-icon"></span>
+          All about mutual funds
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/" class="md-nav__link">
+        All About Mutual Funds
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/1.-what-is-a-mutual-fund/" class="md-nav__link">
+        1. What is a Mutual Fund?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/2.-types-of-mutual-funds/" class="md-nav__link">
+        2. Types of Mutual Funds
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/3.-what-and-why-of-mutual-fund-ratings/" class="md-nav__link">
+        3. What and Why of Mutual Fund Ratings
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/4.-how-to-select-a-mutual-fund-expanded-guidelines/" class="md-nav__link">
+        4. How to Select a Mutual Fund - Expanded Guidelines
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/4.-sip-and-mandates/" class="md-nav__link">
+        6. SIP and Mandates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/5.-some-analysis-using-long-term-equity-and-debt-funds-in-india/" class="md-nav__link">
+        8. Some analysis using long term equity and debt funds in India
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/7.-how-to-become-crorepati-using-mutual-funds/" class="md-nav__link">
+        7. How to Become Crorepati using Mutual Funds
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/analysis-long-term-equity-and-debt-funds-india/" class="md-nav__link">
+        Analysis using long term equity and debt funds in India
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/faqs-for-mutual-funds/" class="md-nav__link">
+        5. FAQs for Mutual Funds
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/faqs/" class="md-nav__link">
+        FAQs for Mutual Funds
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/how-to-become-crorepati-using-mfs/" class="md-nav__link">
+        How to Become Crorepati using Mutual Funds
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/how-to-select-mutual-fund/" class="md-nav__link">
+        How to Select a Mutual Fund
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/sip-and-mandates/" class="md-nav__link">
+        SIP and Mandates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/types-of-mutual-funds/" class="md-nav__link">
+        Types of Mutual Funds
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/what-and-why-mutual-fund-ratings/" class="md-nav__link">
+        What and Why of Mutual Fund Ratings
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/all-about-mutual-funds/what-is-mutual-fund/" class="md-nav__link">
+        What is a Mutual Fund?
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_4" type="checkbox" id="__nav_10_4" >
+      
+      <label class="md-nav__link" for="__nav_10_4">
+        Eli5 series
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Eli5 series" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_4">
+          <span class="md-nav__icon md-icon"></span>
+          Eli5 series
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/eli5-series/" class="md-nav__link">
+        ELI5 Series
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/eli5-series/eli5-guide-to-selecting-an-equity-mutual-fund/" class="md-nav__link">
+        ELI5 guide to Selecting an Equity Mutual Fund
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/eli5-series/how-do-i-start-investing-in-mutual-funds-eli5-series/" class="md-nav__link">
+        How do I start investing in mutual funds \[ELI5 series\]
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/eli5-series/inflation/" class="md-nav__link">
+        Inflation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/eli5-series/life-insurance/" class="md-nav__link">
+        Life Insurance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/eli5-series/mis-selling-of-insurance-products/" class="md-nav__link">
+        Mis-selling of Insurance Products
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/eli5-series/time-value-of-money/" class="md-nav__link">
+        Time Value of Money
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_5" type="checkbox" id="__nav_10_5" >
+      
+      <label class="md-nav__link" for="__nav_10_5">
+        Insurance policies
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Insurance policies" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_5">
+          <span class="md-nav__icon md-icon"></span>
+          Insurance policies
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/" class="md-nav__link">
+        Insurance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/child-plan/" class="md-nav__link">
+        Child Plan
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/health/" class="md-nav__link">
+        Health
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/others-disability-home/" class="md-nav__link">
+        Others: Disability / Home
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_5_5" type="checkbox" id="__nav_10_5_5" >
+      
+      <label class="md-nav__link" for="__nav_10_5_5">
+        Life
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Life" data-md-level="3">
+        <label class="md-nav__title" for="__nav_10_5_5">
+          <span class="md-nav__icon md-icon"></span>
+          Life
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/life/" class="md-nav__link">
+        Life
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/life/faqs/" class="md-nav__link">
+        Some FAQs on Life Insurance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/life/how-to-evaluate-life-insurance-needs/" class="md-nav__link">
+        How to Evaluate Life Insurance Needs
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/life/links/" class="md-nav__link">
+        Links to Answers related to Life Insurance
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/life/term-insurance/" class="md-nav__link">
+        Life Insurance: What it is exactly?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/insurance-policies/life/ulip/" class="md-nav__link">
+        ULIP - Unit Linked Insurance Plan
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_6" type="checkbox" id="__nav_10_6" >
+      
+      <label class="md-nav__link" for="__nav_10_6">
+        Investment philosophy and strategy
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Investment philosophy and strategy" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_6">
+          <span class="md-nav__icon md-icon"></span>
+          Investment philosophy and strategy
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/" class="md-nav__link">
+        Investment Philosophy and Strategy
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/a-simple-financial-planning-roadmap/" class="md-nav__link">
+        A simple Financial Planning Roadmap
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/are-you-a-stock-or-bond/" class="md-nav__link">
+        Are you a Stock or Bond?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/asset-rebalancing/" class="md-nav__link">
+        Asset Rebalancing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/assets-and-asset-allocation/" class="md-nav__link">
+        Assets and Asset Allocation
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/basics-of-investment-strategy-plan/" class="md-nav__link">
+        Basics of Investment Strategy Plan
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/critical-mass/" class="md-nav__link">
+        Critical Mass
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/lumpsum-or-sip-stp/" class="md-nav__link">
+        Lumpsum or SIP/STP
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/investment-philosophy-and-strategy/various-types-of-risks-in-investments/" class="md-nav__link">
+        Various types of Risks in Investments
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_7" type="checkbox" id="__nav_10_7" >
+      
+      <label class="md-nav__link" for="__nav_10_7">
+        Retirement
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Retirement" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_7">
+          <span class="md-nav__icon md-icon"></span>
+          Retirement
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/" class="md-nav__link">
+        Retirement
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/diy-retirement/" class="md-nav__link">
+        Do-It-Yourself Retirement Plan
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/do-it-yourself-retirement-plan/" class="md-nav__link">
+        Do-It-Yourself Retirement Plan
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/long-term-portfolios-and-withdrawal-rate/" class="md-nav__link">
+        Studies of Long Term Portfolios and Retirement Withdrawal Rate Suggestions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/primer-on-retirement-planning/" class="md-nav__link">
+        Primer on Retirement Planning
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/readymade-pension-plan/" class="md-nav__link">
+        Why You should not Opt for a Readymade Pension Plan
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/retirement-planning/" class="md-nav__link">
+        Primer on Retirement Planning
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/studies-of-long-term-portfolios-and-retirement-withdrawal-rate-suggestions/" class="md-nav__link">
+        Studies of Long Term Portfolios and Retirement Withdrawal Rate Suggestions
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/retirement/why-you-should-not-opt-for-a-readymade-pension-plan/" class="md-nav__link">
+        Why You should not Opt for a Readymade Pension Plan
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_10_8" type="checkbox" id="__nav_10_8" >
+      
+      <label class="md-nav__link" for="__nav_10_8">
+        Zero to investing
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Zero to investing" data-md-level="2">
+        <label class="md-nav__title" for="__nav_10_8">
+          <span class="md-nav__icon md-icon"></span>
+          Zero to investing
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/zero-to-investing/" class="md-nav__link">
+        Zero to Investing
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/zero-to-investing/getting-started/" class="md-nav__link">
+        Getting Started
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/zero-to-investing/part-four-how-to-invest/" class="md-nav__link">
+        Part Four - How to Invest
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/zero-to-investing/part-three-spending-pattern/" class="md-nav__link">
+        Part Three - Spending Pattern
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../start-here/zero-to-investing/part-two-defensive-setup/" class="md-nav__link">
+        Part Two - Defensive Setup
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+      
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11" type="checkbox" id="__nav_11" >
+      
+      <label class="md-nav__link" for="__nav_11">
+        Stocks
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Stocks" data-md-level="1">
+        <label class="md-nav__title" for="__nav_11">
+          <span class="md-nav__icon md-icon"></span>
+          Stocks
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/" class="md-nav__link">
+        Introduction to the Stocks Series
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/can-you-beat-the-market/" class="md-nav__link">
+        Can You Beat the Market?
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/due-diligence-checklist/" class="md-nav__link">
+        Due-Diligence Checklist
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/reading-an-annual-report/" class="md-nav__link">
+        Reading an Annual Report
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/researching-a-sector/" class="md-nav__link">
+        Researching a Sector
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/using-screeners/" class="md-nav__link">
+        Using Screeners
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11_7" type="checkbox" id="__nav_11_7" >
+      
+      <label class="md-nav__link" for="__nav_11_7">
+        Financial metrics and ratios
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Financial metrics and ratios" data-md-level="2">
+        <label class="md-nav__title" for="__nav_11_7">
+          <span class="md-nav__icon md-icon"></span>
+          Financial metrics and ratios
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/financial-metrics-and-ratios/" class="md-nav__link">
+        Financial Metrics and Ratios
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/financial-metrics-and-ratios/profitability/" class="md-nav__link">
+        Profitability
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="__nav_11_8" type="checkbox" id="__nav_11_8" >
+      
+      <label class="md-nav__link" for="__nav_11_8">
+        Under progress
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="Under progress" data-md-level="2">
+        <label class="md-nav__title" for="__nav_11_8">
+          <span class="md-nav__icon md-icon"></span>
+          Under progress
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/under-progress/" class="md-nav__link">
+        Work in Progress
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/under-progress/efficiency/" class="md-nav__link">
+        Efficiency
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/under-progress/liquidity-and-solvency/" class="md-nav__link">
+        Liquidity and Solvency
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../stocks/under-progress/understanding-the-business-of-a-company/" class="md-nav__link">
+        Diving Deeper into Businesses
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#introduction-to-csv-format" class="md-nav__link">
+    Introduction to CSV format
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-only-a-comma" class="md-nav__link">
+    Why only a comma?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#using-in-excel" class="md-nav__link">
+    Using in Excel
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-perfect-split" class="md-nav__link">
+    A Perfect SPLIT
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#splitting-entire-csv-dataset" class="md-nav__link">
+    Splitting entire CSV dataset
+  </a>
+  
+    <nav class="md-nav" aria-label="Splitting entire CSV dataset">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#this-isnt-going-to-work" class="md-nav__link">
+    This isn’t going to work
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#transpose" class="md-nav__link">
+    Transpose
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#manual-option" class="md-nav__link">
+    Manual Option
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#alternate-option-automated-processing" class="md-nav__link">
+    Alternate Option : Automated Processing
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#importing-a-csv-file-common-option" class="md-nav__link">
+    Importing a CSV file : Common Option
+  </a>
+  
+    <nav class="md-nav" aria-label="Importing a CSV file : Common Option">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#whats-going-on-here-why-did-we-not-just-do-this-from-the-beginning" class="md-nav__link">
+    What’s going on here? Why did we not just do this from the beginning?
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#wrapping-up" class="md-nav__link">
+    Wrapping Up
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                  <a href="https://github.com/indiainvestments/mkdocswiki/edit/master/docs/excel/using-external-data-working-with-csv-format/csv-format.md" title="Edit this page" class="md-content__button md-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.71 7.04c.39-.39.39-1.04 0-1.41l-2.34-2.34c-.37-.39-1.02-.39-1.41 0l-1.84 1.83 3.75 3.75M3 17.25V21h3.75L17.81 9.93l-3.75-3.75L3 17.25z"/></svg>
+                  </a>
+                
+                
+                <h1 id="csv-format">CSV Format<a class="headerlink" href="#csv-format" title="Permanent link">#</a></h1>
+<h2 id="introduction-to-csv-format">Introduction to CSV format<a class="headerlink" href="#introduction-to-csv-format" title="Permanent link">#</a></h2>
+<p><em>CSV</em> stands for <strong>C</strong>omma <strong>S</strong>eparated <strong>V</strong>alues. It’s a text file, which has entries, separated by comma (<code>,</code>).</p>
+<p>The following is an example of transaction histories in comma-separated values format:</p>
+<div class="highlight"><pre><span></span><code>Date, Folio Number, Name of the Fund, Order, Units, NAV, Current Nav, Amount (INR)
+2020-08-20,123456789,ICICI Prudential Bluechip Growth Direct Plan,buy,55.432,45.10,58.7,2500.0
+2019-08-26,123456789,ICICI Prudential Bluechip Growth Direct Plan,buy,58.343,42.85,58.7,2500.0
+2018-08-24,123456789,ICICI Prudential Bluechip Growth Direct Plan,buy,55.853,44.76,58.7,2500.0
+2018-08-17,123456788,Aditya Birla Sun Life Frontline Equity Growth Direct Plan,buy,10.41,240.15,307.63,2500.0
+2017-10-06,123456789,ICICI Prudential Bluechip Growth Direct Plan,buy,126.167,39.63,58.7,5000.0
+2017-09-11,1234567891,SBI Blue Chip Growth Plan,buy,26.968,37.0803,53.0466,1000.0
+2017-08-10,1234567891,SBI Blue Chip Growth Plan,buy,27.866,35.8865,53.0466,1000.0
+2017-07-10,1234567891,SBI Blue Chip Growth Plan,buy,28.022,35.6867,53.0466,1000.0
+2017-06-12,1234567891,SBI Blue Chip Growth Plan,buy,28.373,35.2445,53.0466,1000.0
+2017-05-10,1234567891,SBI Blue Chip Growth Plan,buy,28.815,34.7041,53.0466,1000.0
+2017-04-10,1234567891,SBI Blue Chip Growth Plan,buy,29.591,33.7945,53.0466,1000.0
+2017-03-10,1234567891,SBI Blue Chip Growth Plan,buy,30.903,32.3593,53.0466,1000.0
+2017-02-10,1234567891,SBI Blue Chip Growth Plan,buy,31.033,32.2233,53.0466,1000.0
+2017-01-10,1234567891,SBI Blue Chip Growth Plan,buy,32.842,30.4492,53.0466,1000.0
+</code></pre></div>
+<p>Notice the first line of the entry:</p>
+<div class="highlight"><pre><span></span><code>Date, Folio Number, Name of the Fund, Order, Units, NAV, Current Nav, Amount (INR)
+</code></pre></div>
+<p>Think of these as the <em>column headers</em> in a table. If we use the comma as guiding split-points, then we can also write this as:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Data</th>
+<th align="left">Folio Number</th>
+<th align="left">Name of the Fund</th>
+<th align="left">Order</th>
+<th align="left">Units</th>
+<th align="left">NAV</th>
+<th align="left">Current NAV</th>
+<th align="left">Amount (INR)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p>From second line onward, the values are entries in the table, below respective column headers.</p>
+<p>Representing entires from the above CSV into a table, would look like this:</p>
+<table>
+<thead>
+<tr>
+<th align="left">Date</th>
+<th align="left">Folio Number</th>
+<th align="left">Name of the Fund</th>
+<th align="left">Order</th>
+<th align="left">Units</th>
+<th align="left">NAV</th>
+<th align="left">Current Nav</th>
+<th align="left">Amount (INR)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">2020-08-20</td>
+<td align="left">123456789</td>
+<td align="left">ICICI Prudential Bluechip Growth Direct Plan</td>
+<td align="left">buy</td>
+<td align="left">55.432</td>
+<td align="left">45.10</td>
+<td align="left">58.7</td>
+<td align="left">2500.0</td>
+</tr>
+<tr>
+<td align="left">2019-08-26</td>
+<td align="left">123456789</td>
+<td align="left">ICICI Prudential Bluechip Growth Direct Plan</td>
+<td align="left">buy</td>
+<td align="left">58.343</td>
+<td align="left">42.85</td>
+<td align="left">58.7</td>
+<td align="left">2500.0</td>
+</tr>
+<tr>
+<td align="left">2018-08-24</td>
+<td align="left">123456789</td>
+<td align="left">ICICI Prudential Bluechip Growth Direct Plan</td>
+<td align="left">buy</td>
+<td align="left">55.853</td>
+<td align="left">44.76</td>
+<td align="left">58.7</td>
+<td align="left">2500.0</td>
+</tr>
+<tr>
+<td align="left">2018-08-17</td>
+<td align="left">123456788</td>
+<td align="left">Aditya Birla Sun Life Frontline Equity Growth Direct Plan</td>
+<td align="left">buy</td>
+<td align="left">10.41</td>
+<td align="left">240.15</td>
+<td align="left">307.63</td>
+<td align="left">2500.0</td>
+</tr>
+<tr>
+<td align="left">2017-10-06</td>
+<td align="left">123456789</td>
+<td align="left">ICICI Prudential Bluechip Growth Direct Plan</td>
+<td align="left">buy</td>
+<td align="left">126.167</td>
+<td align="left">39.63</td>
+<td align="left">58.7</td>
+<td align="left">5000.0</td>
+</tr>
+<tr>
+<td align="left">2017-09-11</td>
+<td align="left">1234567891</td>
+<td align="left">SBI Blue Chip Growth Plan</td>
+<td align="left">buy</td>
+<td align="left">26.968</td>
+<td align="left">37.0803</td>
+<td align="left">53.0466</td>
+<td align="left">1000.0</td>
+</tr>
+<tr>
+<td align="left">2017-08-10</td>
+<td align="left">1234567891</td>
+<td align="left">SBI Blue Chip Growth Plan</td>
+<td align="left">buy</td>
+<td align="left">27.866</td>
+<td align="left">35.8865</td>
+<td align="left">53.0466</td>
+<td align="left">1000.0</td>
+</tr>
+<tr>
+<td align="left">2017-07-10</td>
+<td align="left">1234567891</td>
+<td align="left">SBI Blue Chip Growth Plan</td>
+<td align="left">buy</td>
+<td align="left">28.022</td>
+<td align="left">35.6867</td>
+<td align="left">53.0466</td>
+<td align="left">1000.0</td>
+</tr>
+<tr>
+<td align="left">2017-06-12</td>
+<td align="left">1234567891</td>
+<td align="left">SBI Blue Chip Growth Plan</td>
+<td align="left">buy</td>
+<td align="left">28.373</td>
+<td align="left">35.2445</td>
+<td align="left">53.0466</td>
+<td align="left">1000.0</td>
+</tr>
+<tr>
+<td align="left">2017-05-10</td>
+<td align="left">1234567891</td>
+<td align="left">SBI Blue Chip Growth Plan</td>
+<td align="left">buy</td>
+<td align="left">28.815</td>
+<td align="left">34.7041</td>
+<td align="left">53.0466</td>
+<td align="left">1000.0</td>
+</tr>
+<tr>
+<td align="left">2017-04-10</td>
+<td align="left">1234567891</td>
+<td align="left">SBI Blue Chip Growth Plan</td>
+<td align="left">buy</td>
+<td align="left">29.591</td>
+<td align="left">33.7945</td>
+<td align="left">53.0466</td>
+<td align="left">1000.0</td>
+</tr>
+<tr>
+<td align="left">2017-03-10</td>
+<td align="left">1234567891</td>
+<td align="left">SBI Blue Chip Growth Plan</td>
+<td align="left">buy</td>
+<td align="left">30.903</td>
+<td align="left">32.3593</td>
+<td align="left">53.0466</td>
+<td align="left">1000.0</td>
+</tr>
+<tr>
+<td align="left">2017-02-10</td>
+<td align="left">1234567891</td>
+<td align="left">SBI Blue Chip Growth Plan</td>
+<td align="left">buy</td>
+<td align="left">31.033</td>
+<td align="left">32.2233</td>
+<td align="left">53.0466</td>
+<td align="left">1000.0</td>
+</tr>
+<tr>
+<td align="left">2017-01-10</td>
+<td align="left">1234567891</td>
+<td align="left">SBI Blue Chip Growth Plan</td>
+<td align="left">buy</td>
+<td align="left">32.842</td>
+<td align="left">30.4492</td>
+<td align="left">53.0466</td>
+<td align="left">1000.0</td>
+</tr>
+</tbody>
+</table>
+<p>Think of CSV format as an efficient way of representing table-compatible data, in raw text files where table UI is not present.</p>
+<p>A CSV dataset can be parsed into a table; assuming it's having some uniformity of entries, and properly indicates where a new row starts.</p>
+<h2 id="why-only-a-comma">Why only a comma?<a class="headerlink" href="#why-only-a-comma" title="Permanent link">#</a></h2>
+<p>In a CSV, the <code>,</code> (comma) acts as a <em>separator</em> or split point.</p>
+<p>But it need not always be a comma. Some CSV files use other non-alphanumeric separators, such as semicolon (<code>;</code>), pipe (<code>|</code>), bang (<code>!</code>), period (<code>.</code>), space ( ``) etc.</p>
+<h2 id="using-in-excel">Using in Excel<a class="headerlink" href="#using-in-excel" title="Permanent link">#</a></h2>
+<p>Importing CSV into Excel or Spreadsheet is straightforward.</p>
+<p>However, we’d try to manually do it first.</p>
+<p>Follow these steps:</p>
+<ul>
+<li>
+<p>Create a new sheet in Google Sheets</p>
+</li>
+<li>
+<p>Add the first line of the CSV in a cell</p>
+<p><code>Date, Folio Number, Name of the Fund, Order, Units, NAV, Current Nav, Amount (INR)</code></p>
+</li>
+</ul>
+<p><img alt="After pasting CSV file's first line - Dark Mode" class="dark-mode-image" src="/images/csv-paste.dark.png" /></p>
+<p><img alt="After pasting CSV file's first line - Light Mode" class="light-mode-image" src="/images/csv-paste.light.png" /></p>
+<p>Notice how the text has spilled over the cell, as expected.</p>
+<p>But how to get column headers out of this? It’s just text, all mashed into a single cell!</p>
+<p>That's where the <code>SPLIT()</code> function comes in</p>
+<h2 id="a-perfect-split">A Perfect SPLIT<a class="headerlink" href="#a-perfect-split" title="Permanent link">#</a></h2>
+<p>Spreadsheets provide an in-built function, <code>SPLIT()</code>, to split a text based on a separator or delimiter.</p>
+<p>Here’s link to detailed documentation of the function:</p>
+<p><a href="https://support.google.com/docs/answer/3094136?hl=en">Docs Editor help</a> | <a href="https://web.archive.org/web/20210213105926/https://support.google.com/docs/answer/3094136?hl=en">Internet archive link</a> | <a href="https://archive.is/5pSZw">archive.is link</a></p>
+<p><code>SPLIT()</code> takes a text, and the separator (which in this case, is comma or <code>,</code>).</p>
+<p>We can invoke it as follows:</p>
+<div class="highlight"><pre><span></span><code>SPLIT(cellID, &quot;,&quot;)
+</code></pre></div>
+<p>Notice the <code>""</code> around comma. Second argument to the <code>SPLIT</code> function is a string. It needs to be wrapped in single-quote (<code>''</code>) or double-quote(<code>""</code>).</p>
+<p>Use it as shown in the video (s) below.</p>
+<p><lite-youtube class="youtube-player-dark" videoid="yxjhhLaMH4g"></lite-youtube></p>
+<p><lite-youtube class="youtube-player-light" videoid="oohR6-QaDKg"></lite-youtube></p>
+<p>Notice how the output of <code>SPLIT()</code> function spreads the result into multiple cells, in <strong>same row</strong>.</p>
+<h2 id="splitting-entire-csv-dataset">Splitting entire CSV dataset<a class="headerlink" href="#splitting-entire-csv-dataset" title="Permanent link">#</a></h2>
+<p>Now that we know how to split a line into a row, we can combine with our knowledge of <em>autofill via drag</em>, and apply it on the entire dataset.</p>
+<ul>
+<li>Start by pasting the entire CSV from above into your spreadsheet.</li>
+<li>Use <code>SPLIT()</code> as shown earlier, to derive first line of the table from comma-separated values</li>
+<li>Drag the small square at the bottom of the first cell of this new line / row.</li>
+</ul>
+<p>Refer to the video belo…<strong>wait a second!</strong></p>
+<h3 id="this-isnt-going-to-work">This isn’t going to work<a class="headerlink" href="#this-isnt-going-to-work" title="Permanent link">#</a></h3>
+<p><img alt="Cell Overflow from Pasting all CSV Data - Dark Mode" class="dark-mode-image" src="/images/cell-overflow.dark.png" /></p>
+<p><img alt="Cell Overflow from Pasting all CSV Data - Light Mode" class="light-mode-image" src="/images/cell-overflow.light.png" /></p>
+<p>The entire data is pasted into a single cell. Splitting it would only paste data into a single row.</p>
+<p>It won’t be a table. It’d just be a row of data!</p>
+<p><code>SPLIT()</code> can only break text into cells in <strong>same row</strong>.</p>
+<p>We want data split into multiple rows, as well as multiple columns.</p>
+<p>Enter another in-built function <code>TRANSPOSE()</code>.</p>
+<h2 id="transpose">Transpose<a class="headerlink" href="#transpose" title="Permanent link">#</a></h2>
+<p>This is the documentation provided by Google Sheets team on <code>TRANSPOSE()</code> function</p>
+<p><a href="https://support.google.com/docs/answer/3094262?hl=en">Docs Editor link</a> | <a href="https://web.archive.org/web/20201204232243/https://support.google.com/docs/answer/3094262?hl=en">Internet archive link</a> | <a href="https://archive.is/GXlQD">archive.is link</a></p>
+<p>It takes a row of data, and <em>rotates that</em> into a column of data</p>
+<p>How does that help us?</p>
+<p>While the single cell of data is just a long text, the <em>split points</em> are clear:</p>
+<ul>
+<li>if it’s a <code>SPACE</code>, then it’s a new line / row</li>
+<li>if it’s a comma(<code>,</code>), then it’s supposed to split into a new cell in same row</li>
+</ul>
+<p>To break into multiple rows / lines, we’ve to split by SPACE, and transpose that.</p>
+<div class="highlight"><pre><span></span><code>=TRANSPOSE(SPLIT(cellId, &quot; &quot;))
+</code></pre></div>
+<p>However, it’s not as simple.</p>
+<p>There are lot of spaces in that text. If we apply this logic presented above, it’d spread those in multiple rows as well.</p>
+<p>For example, there’s <code>ICICI Prudential Bluechip Growth Direct Plan</code>.</p>
+<p>It’d split as follows</p>
+<table>
+<thead>
+<tr>
+<th align="left"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td align="left">ICICI</td>
+</tr>
+<tr>
+<td align="left">Prudential</td>
+</tr>
+<tr>
+<td align="left">Bluechip</td>
+</tr>
+<tr>
+<td align="left">Growth</td>
+</tr>
+<tr>
+<td align="left">Direct</td>
+</tr>
+<tr>
+<td align="left">Plan</td>
+</tr>
+</tbody>
+</table>
+<p>Then what do we do?</p>
+<h2 id="manual-option">Manual Option<a class="headerlink" href="#manual-option" title="Permanent link">#</a></h2>
+<p>It’s easy to visualize where the split point should be, for a new row.</p>
+<p>We know the <code>SPLIT()</code> function to be able to split by any delimiter / separator.</p>
+<p>In this case, it’s where the dates start (YYYY-MM-DD format) in that text / string.</p>
+<p>We can manually add our own delimiter character, say, pipe (<code>|</code>).</p>
+<p>Adding a pipe operator, in that CSV string would help. break this down into rows. And from there, we could go for using our trusty <code>TRANSPOSE()</code>, <code>SPLIT()</code> along with auto-fill drag.</p>
+<p>Here’s the CSV, but with <code>|</code> delimiter added for each line-split</p>
+<div class="highlight"><pre><span></span><code>Date, Folio Number, Name of the Fund, Order, Units, NAV, Current Nav, Amount (INR) | 2020-08-20,123456789,ICICI Prudential Bluechip Growth Direct Plan,buy,55.432,45.10,58.7,2500.0 | 2019-08-26,123456789,ICICI Prudential Bluechip Growth Direct Plan,buy,58.343,42.85,58.7,2500.0 | 2018-08-24,123456789,ICICI Prudential Bluechip Growth Direct Plan,buy,55.853,44.76,58.7,2500.0 | 2018-08-17,123456788,Aditya Birla Sun Life Frontline Equity Growth Direct Plan,buy,10.41,240.15,307.63,2500.0 | 2017-10-06,123456789,ICICI Prudential Bluechip Growth Direct Plan,buy,126.167,39.63,58.7,5000.0 | 2017-09-11,1234567891,SBI Blue Chip Growth Plan,buy,26.968,37.0803,53.0466,1000.0 | 2017-08-10,1234567891,SBI Blue Chip Growth Plan,buy,27.866,35.8865,53.0466,1000.0 | 2017-07-10,1234567891,SBI Blue Chip Growth Plan,buy,28.022,35.6867,53.0466,1000.0 | 2017-06-12,1234567891,SBI Blue Chip Growth Plan,buy,28.373,35.2445,53.0466,1000.0 | 2017-05-10,1234567891,SBI Blue Chip Growth Plan,buy,28.815,34.7041,53.0466,1000.0 | 2017-04-10,1234567891,SBI Blue Chip Growth Plan,buy,29.591,33.7945,53.0466,1000.0 | 2017-03-10,1234567891,SBI Blue Chip Growth Plan,buy,30.903,32.3593,53.0466,1000.0 | 2017-02-10,1234567891,SBI Blue Chip Growth Plan,buy,31.033,32.2233,53.0466,1000.0 | 2017-01-10,1234567891,SBI Blue Chip Growth Plan,buy,32.842,30.4492,53.0466,1000.0
+</code></pre></div>
+<p>You might have to scroll horizontally, to view the full text.</p>
+<p>Or use the code-copy button, to copy it in your clipboard, without having to scroll.</p>
+<p>Then paste it in your spreadsheet, and do the following:</p>
+<ul>
+<li>Use <code>TRANSPOSE(SPLIT(cellId, "|"))</code> to split the text or string into a set of rows.</li>
+<li>Create a set of cells calling <code>SPLIT(cellId, ",")</code> on first row</li>
+<li>Drag and auto-fill for each row created earlier</li>
+</ul>
+<p>Refer to the video(s) below</p>
+<p><lite-youtube class="youtube-player-dark" videoid="3zUDl3cQSFU"></lite-youtube></p>
+<p><lite-youtube class="youtube-player-light" videoid="kLfIAQ8rTSY"></lite-youtube></p>
+<p>Final result should look like as follows:</p>
+<p><img alt="CSV Imported and Processed into Rows and Columns - Dark Mode" class="dark-mode-image" src="/images/csv-to-table.dark.png" /></p>
+<p><img alt="CSV Imported and Processed into Rows and Columns - Light Mode" class="light-mode-image" src="/images/csv-to-table.light.png" /></p>
+<h2 id="alternate-option-automated-processing">Alternate Option : Automated Processing<a class="headerlink" href="#alternate-option-automated-processing" title="Permanent link">#</a></h2>
+<p>It might not always be feasible to do this manually.</p>
+<p>In a real transaction history CSV export, there might be hundreds, if not thousands of transactions, over the years.</p>
+<p>It’s simply not humanly possible to expect that manually adding a pipe (<code>|</code>) delimiter is possible, and not error-prone (i.e., putting it out-of-place by mistake).</p>
+<p>What if we could tell excel:</p>
+<blockquote>
+<p>hey, see those YYYY-MM-DD dates? add a pipe delimiter just before that</p>
+</blockquote>
+<p><strong>OR</strong></p>
+<blockquote>
+<p>hey, see that word after every 7th comma? put a pipe delimiter just after that</p>
+</blockquote>
+<p>We’ve to use <strong>regular expressions</strong> (aka RegEx) for these.</p>
+<p>Discussing regular expressions are quite out of scope for this entire wiki, hence we won’t dabble in that. However, we do want to provide a brief overview.</p>
+<p>We’d highly recommend checking out regular expression operator functions in google sheets, namely:</p>
+<ul>
+<li><a href="https://support.google.com/docs/answer/3098292?hl=en"><code>REGEXMATCH()</code></a> | <a href="https://web.archive.org/web/20210125193814/https://support.google.com/docs/answer/3098292?hl=en">Internet archive link</a> | <a href="https://archive.is/t9K1l">archive.is link</a></li>
+<li><a href="https://support.google.com/docs/answer/3098245"><code>REGEXREPLACE()</code></a> | <a href="https://web.archive.org/web/20210317145521/https://support.google.com/docs/answer/3098245">Internet archive link</a> | <a href="https://archive.is/VzGnJ">archive.is link</a></li>
+</ul>
+<p>We won't be covering these in any detail here; because the next option is best. It's in-built, works for almost all CSV files, been around for years, if not decades.</p>
+<h2 id="importing-a-csv-file-common-option">Importing a CSV file : Common Option<a class="headerlink" href="#importing-a-csv-file-common-option" title="Permanent link">#</a></h2>
+<p>Most commonly, you’d find yourself importing content of your CSV file directly into your spreadsheet, using import.</p>
+<p>Here's a sample CSV file for you to download</p>
+<p>{% file src="../../.gitbook/assets/test.csv" caption="test.csv" %}</p>
+<ul>
+<li>Download <code>test.csv</code> into your system</li>
+<li>Go to <code>File</code> → <code>Import</code></li>
+<li>It’d open up a dialog box, to import a file</li>
+<li>Select the last option, <code>Upload</code></li>
+<li>Use your file browser program or just drag and drop the CSV file in that</li>
+</ul>
+<p>Spreadsheet would ask you for inputs on how to parse the CSV data in the file.</p>
+<p>In most common cases, it’d be able to parse that correctly into a table.</p>
+<p><img alt="Importing CSV File into Spreadsheet - Dark Mode" class="dark-mode-image" src="/images/csv-file-import.dark.png" /></p>
+<p><img alt="Importing CSV File into Spreadsheet - Light Mode" class="light-mode-image" src="/images/csv-file-import.light.png" /></p>
+<details class="info" open="open"><summary>Info</summary><p>In this case, we should provide separator type as comma</p>
+</details>
+<p><img alt="After Successful Import - Dark Mode" class="dark-mode-image" src="/images/csv-file-import-result.dark.png" /></p>
+<p><img alt="After Successful Import - Light Mode" class="light-mode-image" src="/images/csv-file-import-result.light.png" /></p>
+<p>How’s this even possible?!</p>
+<p>We spent so much time struggling with <code>SPLIT()</code>, <code>TRANSPOSE()</code>; then alluded to some scary regular expression stuff.</p>
+<p>And in-built spreadsheet import figured out how to create the table, how to split in rows and columns in matter of seconds!</p>
+<h3 id="whats-going-on-here-why-did-we-not-just-do-this-from-the-beginning">What’s going on here? Why did we not just do this from the beginning?<a class="headerlink" href="#whats-going-on-here-why-did-we-not-just-do-this-from-the-beginning" title="Permanent link">#</a></h3>
+<p>Well, you see, when you copy-paste a piece of text in a single cell, it loses some information already present in it.</p>
+<p>This information is line split / line break. This is invisible to human eye. But this character is a special type of delimiter, that’d be present if we save the CSV as a text file.</p>
+<p>Most spreadsheet or excel import programs are watching out for this special character:</p>
+<ul>
+<li>if there’s a line-break character, put it in next row</li>
+<li>if there’s comma, it goes in a new cell in same row</li>
+</ul>
+<p>We lose this line-break character if we copy-paste entire CSV into a single cell.</p>
+<p>We didn’t do it from the beginning, because under the hood, excel / spreadsheet would be using something akin to the core functionalities of <code>SPLIT()</code>, <code>TRANSPOSE()</code> etc. to do the layout.</p>
+<p>This <em>magic</em> needed some DIY (<strong>D</strong>o <strong>I</strong>t <strong>Y</strong>ourself) explanation.</p>
+<h2 id="wrapping-up">Wrapping Up<a class="headerlink" href="#wrapping-up" title="Permanent link">#</a></h2>
+<p>In this chapter, we learned</p>
+<ul>
+<li>how to deal with CSV data</li>
+<li>various separators</li>
+<li><code>SPLIT()</code>, <code>TRANSPOSE()</code> functions</li>
+<li>CSV importing into a sheet as a table of data</li>
+</ul>
+<p>It might feel as if there was no point to using these functions, when all this time we could have just used in-built import functionality.</p>
+<p>Note that a CSV format might not always be a file you import. In a later chapter, we'd have to import CSV data from the web, which cannot be in a file format. <code>SPLIT()</code> might come in handy in such situations.</p>
+<p>In the next chapter, we'd pick up a real world problem, that's common for most mutual fund investors. CSV format would be at the heart of this problem statement.</p>
+                
+                  
+                    
+
+<hr>
+<div class="md-source-date">
+  <small>
+    
+      Last update: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">July 4, 2021</span>
+      
+        <br>Created: <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-date">June 1, 2021</span> 
+      
+    
+  </small>
+</div>
+                  
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+        
+          <a href="#" class="md-top md-icon" title="Back to top" data-md-component="top" data-md-state="hidden">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"/></svg>
+          </a>
+        
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        
+        <a href="../computing-ltcg-eligible-equity-units/" class="md-footer__link md-footer__link--prev" aria-label="Previous: Computing LTCG Eligible Equity Units" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              Computing LTCG Eligible Equity Units
+            </div>
+          </div>
+        </a>
+      
+      
+        
+        <a href="../process-for-estimating-tax/" class="md-footer__link md-footer__link--next" aria-label="Next: Process for Estimating Tax" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              Process for Estimating Tax
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+          <div class="md-footer-copyright__highlight">
+            &copy; Licensed Under <a href=https://creativecommons.org/licenses/by-nc/4.0/> CC BY-NC 4.0</a>
+          </div>
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+        
+      </div>
+      
+  <div class="md-footer-social">
+    
+      
+      
+      <a href="https://www.reddit.com/r/IndiaInvestments/" target="_blank" rel="noopener" title="IndiaInvestments on Reddit" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M201.5 305.5c-13.8 0-24.9-11.1-24.9-24.6 0-13.8 11.1-24.9 24.9-24.9 13.6 0 24.6 11.1 24.6 24.9 0 13.6-11.1 24.6-24.6 24.6zM504 256c0 137-111 248-248 248S8 393 8 256 119 8 256 8s248 111 248 248zm-132.3-41.2c-9.4 0-17.7 3.9-23.8 10-22.4-15.5-52.6-25.5-86.1-26.6l17.4-78.3 55.4 12.5c0 13.6 11.1 24.6 24.6 24.6 13.8 0 24.9-11.3 24.9-24.9s-11.1-24.9-24.9-24.9c-9.7 0-18 5.8-22.1 13.8l-61.2-13.6c-3-.8-6.1 1.4-6.9 4.4l-19.1 86.4c-33.2 1.4-63.1 11.3-85.5 26.8-6.1-6.4-14.7-10.2-24.1-10.2-34.9 0-46.3 46.9-14.4 62.8-1.1 5-1.7 10.2-1.7 15.5 0 52.6 59.2 95.2 132 95.2 73.1 0 132.3-42.6 132.3-95.2 0-5.3-.6-10.8-1.9-15.8 31.3-16 19.8-62.5-14.9-62.5zM302.8 331c-18.2 18.2-76.1 17.9-93.6 0-2.2-2.2-6.1-2.2-8.3 0-2.5 2.5-2.5 6.4 0 8.6 22.8 22.8 87.3 22.8 110.2 0 2.5-2.2 2.5-6.1 0-8.6-2.2-2.2-6.1-2.2-8.3 0zm7.7-75c-13.6 0-24.6 11.1-24.6 24.9 0 13.6 11.1 24.6 24.6 24.6 13.8 0 24.9-11.1 24.9-24.6 0-13.8-11-24.9-24.9-24.9z"/></svg>
+      </a>
+    
+      
+      
+      <a href="https://discord.gg/hqBNg4u" target="_blank" rel="noopener" title="IndiaInvestments on Discord" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M297.216 243.2c0 15.616-11.52 28.416-26.112 28.416-14.336 0-26.112-12.8-26.112-28.416s11.52-28.416 26.112-28.416c14.592 0 26.112 12.8 26.112 28.416zm-119.552-28.416c-14.592 0-26.112 12.8-26.112 28.416s11.776 28.416 26.112 28.416c14.592 0 26.112-12.8 26.112-28.416.256-15.616-11.52-28.416-26.112-28.416zM448 52.736V512c-64.494-56.994-43.868-38.128-118.784-107.776l13.568 47.36H52.48C23.552 451.584 0 428.032 0 398.848V52.736C0 23.552 23.552 0 52.48 0h343.04C424.448 0 448 23.552 448 52.736zm-72.96 242.688c0-82.432-36.864-149.248-36.864-149.248-36.864-27.648-71.936-26.88-71.936-26.88l-3.584 4.096c43.52 13.312 63.744 32.512 63.744 32.512-60.811-33.329-132.244-33.335-191.232-7.424-9.472 4.352-15.104 7.424-15.104 7.424s21.248-20.224 67.328-33.536l-2.56-3.072s-35.072-.768-71.936 26.88c0 0-36.864 66.816-36.864 149.248 0 0 21.504 37.12 78.08 38.912 0 0 9.472-11.52 17.152-21.248-32.512-9.728-44.8-30.208-44.8-30.208 3.766 2.636 9.976 6.053 10.496 6.4 43.21 24.198 104.588 32.126 159.744 8.96 8.96-3.328 18.944-8.192 29.44-15.104 0 0-12.8 20.992-46.336 30.464 7.68 9.728 16.896 20.736 16.896 20.736 56.576-1.792 78.336-38.912 78.336-38.912z"/></svg>
+      </a>
+    
+      
+      
+      <a href="https://github.com/indiainvestments" target="_blank" rel="noopener" title="IndiaInvestments on GitHub" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg>
+      </a>
+    
+      
+      
+      <a href="mailto:hello@indiainvestments.wiki" target="_blank" rel="noopener" title="Send a Mail to IndiaInvestments" class="md-footer-social__link">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path d="M464 64H48C21.49 64 0 85.49 0 112v288c0 26.51 21.49 48 48 48h416c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm0 48v40.805c-22.422 18.259-58.168 46.651-134.587 106.49-16.841 13.247-50.201 45.072-73.413 44.701-23.208.375-56.579-31.459-73.413-44.701C106.18 199.465 70.425 171.067 48 152.805V112h416zM48 400V214.398c22.914 18.251 55.409 43.862 104.938 82.646 21.857 17.205 60.134 55.186 103.062 54.955 42.717.231 80.509-37.199 103.053-54.947 49.528-38.783 82.032-64.401 104.947-82.653V400H48z"/></svg>
+      </a>
+    
+  </div>
+
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../../..", "features": ["navigation.instant", "navigation.sections", "navigation.top", "header.autohide"], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing", "select.version.title": "Select version"}, "search": "../../../assets/javascripts/workers/search.477d984a.min.js", "version": null}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.82b56eb2.min.js"></script>
+      
+        <script src="../../../js/lite-yt-embed.js"></script>
+      
+    
+  </body>
+</html>
